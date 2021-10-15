@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Holidayaro.Models;
 
 namespace Holidayaro.Data
 {
@@ -12,5 +13,8 @@ namespace Holidayaro.Data
             : base(options)
         {
         }
+        public DbSet<Holidayaro.Models.HotelAttraction> HotelAttraction { get; set; }
+        public DbSet<Holidayaro.Models.HotelDescription> HotelDescription { get; set; }
+        public DbSet<Holidayaro.Models.Hotel> Hotel { get; set; }
     }
 }
