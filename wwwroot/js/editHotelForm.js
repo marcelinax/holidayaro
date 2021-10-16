@@ -59,8 +59,8 @@ const deleteDecsription = (descriptionId) => {
 const getHotelDescriptions = () => {
     fetch('/api/hoteldescriptions').then(res => res.json()).then(data => {
 
-        hotelDescriptions = data.filter(item => item.hotelId = currentHotelId).map(item => item.name);
-        hotelDescriptionsIds = data.filter(item => item.hotelId = currentHotelId).map(item => item.hotelDescriptionId);
+        hotelDescriptions = data.$values.filter(item => item.hotelId === currentHotelId).map(item => item.name);
+        hotelDescriptionsIds = data.$values.filter(item => item.hotelId === currentHotelId).map(item => item.hotelDescriptionId);
         drawHotelDescriptions();
     })
 }
@@ -85,9 +85,9 @@ const deleteAttraction = (attractionId) => {
 
 const getHotelAttractions = () => {
     fetch('/api/hotelattractions').then(res => res.json()).then(data => {
-
-        hotelAttractions = data.filter(item => item.hotelId = currentHotelId).map(item => item.name);
-        hotelAttractionsIds = data.filter(item => item.hotelId = currentHotelId).map(item => item.hotelAttractionId);
+        console.log(data.$values);
+        hotelAttractions = data.$values.filter(item => item.hotelId === currentHotelId).map(item => item.name);
+        hotelAttractionsIds = data.$values.filter(item => item.hotelId === currentHotelId).map(item => item.hotelAttractionId);
         drawHotelAttractions();
     })
 
@@ -112,13 +112,34 @@ const deletePhoto = (photoId) => {
 
 const getPhotosUrls = () => {
     fetch('/api/photosurls').then(res => res.json()).then(data => {
-
-        hotelPhotos = data.filter(item => item.hotelId = currentHotelId).map(item => item.photoUrl);
-        hotelPhotosIds = data.filter(item => item.hotelId = currentHotelId).map(item => item.photosUrlId);
+        hotelPhotos = data.$values.filter(item => item.hotelId === currentHotelId).map(item => item.photoUrl);
+        hotelPhotosIds = data.$values.filter(item => item.hotelId === currentHotelId).map(item => item.photosUrlId);
         drawHotelPhotos();
     })
 }
 
+
+hotelAttractionsInputElement.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.target.value !== '') {
+            fetch('/api/hotelattractions', {
+                method: "POST",
+                body: JSON.stringify({
+                    hotelId: currentHotelId,
+                    name: e.target.value
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(() => {
+                getHotelAttractions()
+                e.target.value = '';
+            })
+        }
+    }
+})
 
 hotelPhotosInputElement.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
@@ -162,7 +183,7 @@ document.getElementById("edit-hotel-form").addEventListener("submit", (e) => {
         document.getElementById('photos-error').innerHTML = 'The Photos urls field is required.';
     }
     else document.getElementById('photos-error').innerHTML = '';
-    if (!isValid) e.preventDefault()
+    if(!isValid)e.preventDefault();
 })
 
 
