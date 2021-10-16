@@ -22,7 +22,7 @@ namespace Holidayaro.Controllers
         // GET: Hotels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Hotel.Include("HotelAttractions").Include("HotelDescriptions").ToListAsync());
+            return View(await _context.Hotel.Include("HotelAttractions").Include("HotelDescriptions").Include("PhotosUrls").ToListAsync());
         }
 
         // GET: Hotels/Details/5

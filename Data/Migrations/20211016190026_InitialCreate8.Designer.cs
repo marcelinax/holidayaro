@@ -4,14 +4,16 @@ using Holidayaro.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Holidayaro.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211016190026_InitialCreate8")]
+    partial class InitialCreate8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,6 +40,10 @@ namespace Holidayaro.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -342,7 +348,7 @@ namespace Holidayaro.Data.Migrations
             modelBuilder.Entity("Holidayaro.Models.PhotosUrl", b =>
                 {
                     b.HasOne("Holidayaro.Models.Hotel", "Hotel")
-                        .WithMany("PhotosUrls")
+                        .WithMany("HotelPhotosUrls")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -407,7 +413,7 @@ namespace Holidayaro.Data.Migrations
 
                     b.Navigation("HotelDescriptions");
 
-                    b.Navigation("PhotosUrls");
+                    b.Navigation("HotelPhotosUrls");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,6 +3,8 @@ let hotelDescriptions = [];
 let hotelDescriptionsIds = [];
 let hotelAttractions = [];
 let hotelAttractionsIds = [];
+let hotelPhotos = [];
+let hotelPhotosIds = [];
 const hotelDescriptionsElement = document.querySelector("#hotel-descriptions .items");
 const argument = location.pathname.split('/');
 const currentHotelId = +argument[argument.length - 1];
@@ -10,6 +12,9 @@ const currentHotelId = +argument[argument.length - 1];
 const hotelDescriptionInputElement = document.querySelector("#hotel-descriptions input");
 const hotelAttractionsElement = document.querySelector("#hotel-attractions .items");
 const hotelAttractionsInputElement = document.querySelector("#hotel-attractions input");
+
+const hotelPhotosElement = document.querySelector("#hotel-photos .items");
+const hotelPhotosInputElement = document.querySelector("#hotel-photos input");
 
 const drawHotelDescriptions = () => {
     hotelDescriptionsElement.innerHTML = '';
@@ -85,25 +90,52 @@ const getHotelAttractions = () => {
         hotelAttractionsIds = data.filter(item => item.hotelId = currentHotelId).map(item => item.hotelAttractionId);
         drawHotelAttractions();
     })
+
+}
+
+const drawHotelPhotos = () => {
+    hotelPhotosElement.innerHTML = '';
+    hotelPhotos.forEach((hotelPhoto, index) => {
+        const hotelPhotoElement = document.createElement('span');
+        hotelPhotoElement.innerHTML = `${hotelPhoto} <small class='delete'>x</small>`;
+        hotelPhotoElement.querySelector('.delete').addEventListener('click', () => deletePhoto(hotelPhotosIds[index]))
+        hotelPhotosElement.appendChild(hotelPhotoElement)
+    })
 }
 
 
-hotelAttractionsInputElement.addEventListener('keydown', (e) => {
+const deletePhoto = (photoId) => {
+    fetch(`/api/photosurls/${photoId}`, { method: 'DELETE' }).then(() => {
+        getPhotosUrls()
+    })
+}
+
+const getPhotosUrls = () => {
+    fetch('/api/photosurls').then(res => res.json()).then(data => {
+
+        hotelPhotos = data.filter(item => item.hotelId = currentHotelId).map(item => item.photoUrl);
+        hotelPhotosIds = data.filter(item => item.hotelId = currentHotelId).map(item => item.photosUrlId);
+        drawHotelPhotos();
+    })
+}
+
+
+hotelPhotosInputElement.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         e.preventDefault();
         e.stopPropagation();
         if (e.target.value !== '') {
-            fetch('/api/hotelattractions', {
+            fetch('/api/photosurls', {
                 method: "POST",
                 body: JSON.stringify({
                     hotelId: currentHotelId,
-                    name: e.target.value
+                    photoUrl: e.target.value
                 }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then(() => {
-                getHotelAttractions()
+                getPhotosUrls()
                 e.target.value = '';
             })
         }
@@ -124,6 +156,12 @@ document.getElementById("edit-hotel-form").addEventListener("submit", (e) => {
         document.getElementById('descriptions-error').innerHTML = 'The Descriptions field is required.';
     }
     else document.getElementById('descriptions-error').innerHTML = '';
+
+    if (hotelPhotos.length < 1) {
+        isValid = false;
+        document.getElementById('photos-error').innerHTML = 'The Photos urls field is required.';
+    }
+    else document.getElementById('photos-error').innerHTML = '';
     if (!isValid) e.preventDefault()
 })
 
@@ -131,3 +169,4 @@ document.getElementById("edit-hotel-form").addEventListener("submit", (e) => {
 
 getHotelDescriptions();
 getHotelAttractions();
+getPhotosUrls();

@@ -18,7 +18,6 @@ namespace Holidayaro.Models
         public string Country { get; set; }
         public int Price { get; set; }
         [Required]
-        public string PhotoUrl { get; set; }
         public double Rating { get; set; }
         public int Days { get; set; }
         [Required]
@@ -28,5 +27,6 @@ namespace Holidayaro.Models
 
         public ICollection<HotelAttraction> HotelAttractions { get; set; }
         public ICollection<HotelDescription> HotelDescriptions { get; set; }
+        public ICollection<PhotosUrl> PhotosUrls { get; set; }
 }
 }

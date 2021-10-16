@@ -36,12 +36,6 @@
             </div>
             <div class="form-group">
 
-                <input asp-for="PhotoUrl" class="form-control" placeholder="PhotoUrl" />
-                <i class='bx bx-image'></i>
-                <span asp-validation-for="PhotoUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-
                 <input asp-for="Rating" class="form-control" placeholder="Rating" />
                 <i class='bx bx-star'></i>
                 <span asp-validation-for="Rating" class="text-danger"></span>
@@ -82,6 +76,15 @@
 
                 </div>
                 <span asp-validation-for="HotelAttractions" class="text-danger" id="attractions-error"></span>
+            </div> 
+            
+            <div id="hotel-photos" class="form-group align-items-center">
+                <div class="form-control ps-0 d-flex flex-wrap">
+                    <div class="items align-items-center d-flex w-100 flex-wrap"></div>
+                    <input placeholder="Photos url" class="m-0 p-0 border-0" />
+                    <i class='bx bx-spa'></i>
+                </div>
+                <span asp-validation-for="PhotosUrls" class="text-danger" id="photos-error"></span>
             </div>
 
 
