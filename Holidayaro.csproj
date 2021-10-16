@@ -16,4 +16,16 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\styles\styles.css">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>styles.scss</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\styles\styles.scss">
+      <Generator>SassTranspiler</Generator>
+      <LastGenOutput>styles.css</LastGenOutput>
+    </Content>
+  </ItemGroup>
+
 </Project>

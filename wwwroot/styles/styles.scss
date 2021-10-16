@@ -1,0 +1,204 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.header {
+    width: 100%;
+    height: 600px;
+
+    &-bg {
+        height: 100%;
+        width: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url('https://www.plants-wallpapers.com/plant/holiday-sea-sky-beaches-palms-tropical.jpg')
+    }
+
+    .navbar {
+
+        &-brand {
+            color: white;
+            font-size: 30px;
+            font-weight: 600;
+        }
+
+        &-nav {
+            &:nth-child(2) {
+                .nav-item {
+                    &:last-child {
+                        &:hover {
+                            &::after {
+                                left: 45%;
+                            }
+                        }
+
+
+                        .nav-link {
+                            margin-right: 0;
+                        }
+                    }
+                }
+            }
+
+
+
+            .nav-item {
+                border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+                position: relative;
+
+
+                &:hover {
+                    &::after {
+                        content: '';
+                        width: 30%;
+                        background-color: white;
+                        height: 4px;
+                        position: absolute;
+                        bottom: -2px;
+                        left: 30%;
+                        transform: translateX(-30%)
+                    }
+                }
+
+
+                .nav-link {
+                    color: white;
+                    text-transform: uppercase;
+                    font-weight: 500;
+                    margin-right: 2rem;
+
+                }
+            }
+        }
+    }
+}
+.form-layout {
+    width: 100%;
+    height: 100vh;
+
+    main {
+        width: 100%;
+        height: 100%;
+
+        .row {
+            width: 100%;
+
+            h5 {
+                font-weight: 400;
+                margin-bottom: 1rem;
+                color: #636363;
+            }
+        }
+    }
+
+
+    form {
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+
+
+            .form-control, input, a {
+                outline: none !important;
+                background-color: transparent;
+                border: 2px solid #D3D8DC;
+                padding-left: 3.5rem;
+                color: #D3D8DC;
+                font-size: 13px;
+                padding-top: 0.6rem;
+                padding-bottom: 0.6rem;
+                max-width: 100%;
+                height: unset;
+
+                &:focus {
+                    box-shadow: unset;
+                }
+
+                &::placeholder {
+                    color: #D6DADD;
+                    font-size: 13px;
+                }
+            }
+
+            i {
+                position: absolute;
+                top: 50%;
+                left: .5rem;
+                transform: translateY(-50%);
+                font-size: 24px;
+                color: #D3D8DC;
+                border-right: 2px solid #D3D8DC;
+                padding-right: .5rem;
+            }
+
+            .btn {
+                background-color: #78B9B8;
+                border: none;
+                padding: 8px 20px;
+                min-width: unset;
+                flex-basis: 50%;
+                transition: .3s all;
+
+                &:first-child {
+                    background-color: transparent;
+                    border: 1px solid #78B9B8;
+                    color: #78B9B8;
+                }
+
+                &:hover {
+                    transform: scale(0.9)
+                }
+            }
+
+            .text-danger {
+                font-size: 10px;
+                position: absolute;
+            }
+        }
+
+        .items {
+            max-height: 110px;
+            overflow: auto;
+
+            &::-webkit-scrollbar {
+                width: 6px;
+                height:6px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: #D3D8DC;
+                border-radius: 20px;
+
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #78B9B8;
+                border-radius: 20px;
+            }
+
+            span {
+                background-color: #78B9B8;
+                padding: 5px 8px;
+                padding-right: 15px;
+                font-size: 12px;
+                border-radius: 2px;
+                color: #D3D8DC;
+                margin-right: 5px;
+                margin-bottom: 5px;
+                position:relative;
+                small{
+                    position:absolute;
+                    top:0;
+                    right:4px;
+                    cursor:pointer;
+                }
+            }
+        }
+    }
+}
+
