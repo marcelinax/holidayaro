@@ -443,4 +443,4 @@ D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\Hotels\Edit.cshtml.g
 D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\Hotels\Index.cshtml.g.cs
 D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\Shared\_Header.cshtml.g.cs
 D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\Admin\Index.cshtml.g.cs
-D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\Shared\_FormLayout.cshtml.g.cs
+D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\Shared\_DefaultLayout.cshtml.g.cs

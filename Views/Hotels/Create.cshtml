@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_FormLayout.cshtml";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
 
 }
 
@@ -68,25 +68,7 @@
                     <span asp-validation-for="Board" class="text-danger"></span>
                 </div>
 
-                <div id="hotel-descriptions" class="form-group align-items-center">
-                    <div class="form-control ps-0 d-flex flex-wrap">
-                        <div class="items align-items-center d-flex w-100 flex-wrap"></div>
-                        <input placeholder="Descriptions" class="m-0 p-0 border-0" />
-                        <i class='bx bx-detail'></i>
-
-                    </div>
-                    <span asp-validation-for="Descriptions" class="text-danger" id="descriptions-error"></span>
-                </div>
-
-                <div id="hotel-attractions" class="form-group align-items-center">
-                    <div class="form-control ps-0 d-flex flex-wrap">
-                        <div class="items align-items-center d-flex w-100 flex-wrap"></div>
-                        <input placeholder="Attractions" class="m-0 p-0 border-0" />
-                        <i class='bx bx-spa'></i>
-
-                    </div>
-                    <span asp-validation-for="Attractions" class="text-danger" id="attractions-error"></span>
-                </div>
+                
 
                 <div class="form-group d-flex justify-content-center align-items-center">
                     <a class="btn d-flex justify-content-center align-items-center mr-2" asp-action="Index">

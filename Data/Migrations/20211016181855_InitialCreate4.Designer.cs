@@ -4,14 +4,16 @@ using Holidayaro.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Holidayaro.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211016181855_InitialCreate4")]
+    partial class InitialCreate4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,7 +306,7 @@ namespace Holidayaro.Data.Migrations
             modelBuilder.Entity("Holidayaro.Models.HotelAttraction", b =>
                 {
                     b.HasOne("Holidayaro.Models.Hotel", "Hotel")
-                        .WithMany("HotelAttractions")
+                        .WithMany("Attractions")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -315,7 +317,7 @@ namespace Holidayaro.Data.Migrations
             modelBuilder.Entity("Holidayaro.Models.HotelDescription", b =>
                 {
                     b.HasOne("Holidayaro.Models.Hotel", "Hotel")
-                        .WithMany("HotelDescriptions")
+                        .WithMany("Descriptions")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -376,9 +378,9 @@ namespace Holidayaro.Data.Migrations
 
             modelBuilder.Entity("Holidayaro.Models.Hotel", b =>
                 {
-                    b.Navigation("HotelAttractions");
+                    b.Navigation("Attractions");
 
-                    b.Navigation("HotelDescriptions");
+                    b.Navigation("Descriptions");
                 });
 #pragma warning restore 612, 618
         }

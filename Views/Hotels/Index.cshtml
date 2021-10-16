@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
 }
 
 <h1>Index</h1>
@@ -36,7 +36,14 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Board)
-            </th>
+            </th>  
+            <th>
+                @Html.DisplayNameFor(model => model.HotelDescriptions)
+            </th> 
+            <th>
+                @Html.DisplayNameFor(model => model.HotelAttractions)
+            </th> 
+           
             <th></th>
         </tr>
     </thead>
@@ -67,6 +74,21 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Board)
             </td>
+            <td>
+                @foreach (var element in item.HotelDescriptions)
+                {
+                <p>@Html.DisplayFor(m => element.Name)</p>
+                }
+
+            </td>
+            <td>
+                @foreach (var element in item.HotelAttractions)
+                {
+                    <p>@Html.DisplayFor(m => element.Name)</p>
+                }
+            </td>
+
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.HotelId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.HotelId">Details</a> |

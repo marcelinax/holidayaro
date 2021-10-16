@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Holidayaro.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Holidayaro.Models
 {
+
     public class Hotel
     {
         public int HotelId { get; set; }
@@ -23,7 +26,7 @@ namespace Holidayaro.Models
         [Required]
         public string Board { get; set; }
 
-        public List<HotelAttraction> Attractions { get; set; }
-        public List<HotelDescription> Descriptions { get; set; }
+        public ICollection<HotelAttraction> HotelAttractions { get; set; }
+        public ICollection<HotelDescription> HotelDescriptions { get; set; }
 }
 }

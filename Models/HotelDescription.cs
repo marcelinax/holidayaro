@@ -10,9 +10,11 @@ namespace Holidayaro.Models
     public class HotelDescription
     {
         public int HotelDescriptionId { get; set; }
-        [ForeignKey("HotelId")]
+        
         public int HotelId { get; set; }
-     [Required]
+        [ForeignKey("HotelId")]
+        public Hotel Hotel { get; set; }
+        [Required]
         public string Name { get; set; }
     }
 }
