@@ -254,6 +254,10 @@
             color: #3F3D56;
             font-size: 24px;
         }
+
+        h5 {
+            color: #42425B;
+        }
     }
 }
 
@@ -261,6 +265,51 @@
     box-shadow: 0 0 15px rgba(#000, .2);
     background-color: white;
     padding: 0 10px;
+
+    &-top {
+        padding: 2rem;
+
+
+        .btn {
+            outline: none;
+            font-size: 14px;
+            box-shadow: unset;
+            padding: .375rem 1.5rem;
+        }
+
+        label {
+            color: #A6A5B3;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .btns-box {
+            .btn {
+                border: 2px solid #A6A5B3;
+                padding: 5px;
+                display: flex;
+                border-radius: 0;
+
+                &:first-child {
+                    border-right: 0;
+                }
+
+                i {
+                    color: #A6A5B3;
+                }
+            }
+        }
+
+
+
+        select {
+            border: 2px solid #A6A5B3;
+            height: 10px;
+            padding: 9px 12px;
+            color: #A6A5B3;
+            outline: none;
+        }
+    }
 
     table {
         thead {
