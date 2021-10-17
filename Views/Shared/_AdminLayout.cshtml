@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Holidayaro</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/styles/styles.css" />
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body style="background-color: #F0F1F6" >
+    <div class="admin-layout d-flex" >
+        <div class="sidebar d-flex flex-column justify-content-center align-items-center">
+            <a class="sidebar-link-item" asp-controller="Home" asp-action="Index">
+                <i class='bx bx-home'></i>
+                <p>Home</p>
+            </a>
+            <a class="sidebar-link-item" asp-controller="Hotels" asp-action="Index">
+                <i class='bx bxs-hotel'></i>
+                <p>Hotels</p>
+            </a>
+            <a class="sidebar-link-item" asp-controller="Hotels" asp-action="Index">
+                <i class='bx bx-book'></i>
+                <p>Reservations</p>
+            </a>
+        </div>
+        <div class="container-fluid w-100">
+            <main role="main" class="py-5 px-5">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

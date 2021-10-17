@@ -22,6 +22,7 @@ namespace Holidayaro.Models
         public int Days { get; set; }
         [Required]
         public string Room { get; set; }
+      
         [Required]
         public string Board { get; set; }
 

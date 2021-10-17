@@ -71,12 +71,12 @@
                     text-transform: uppercase;
                     font-weight: 500;
                     margin-right: 2rem;
-
                 }
             }
         }
     }
 }
+
 .default-layout {
     width: 100%;
     height: 100vh;
@@ -202,3 +202,171 @@
     }
 }
 
+
+.sidebar {
+    background-color: #42425C;
+    width: 250px;
+    height: 100vh;
+
+    &-link-item {
+        padding: 10px 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: .2s all;
+        text-decoration: none !important;
+
+        i {
+            margin-left: 3rem;
+            color: #828293;
+            font-size: 24px;
+        }
+
+        p {
+            margin-left: 1rem;
+            color: #A8A8B5;
+            font-size: 1rem;
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
+        &:hover {
+            background-color: #3A384E;
+        }
+    }
+}
+
+.admin-layout {
+    main {
+
+        .bg-img {
+            width: 50%;
+            height: 30%;
+            background-image: url('../assets/decide.svg');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            color: #3F3D56;
+            font-size: 24px;
+        }
+    }
+}
+
+.table-box {
+    box-shadow: 0 0 15px rgba(#000, .2);
+    background-color: white;
+    padding: 0 10px;
+
+    table {
+        thead {
+
+
+            tr {
+                background-color: #E9E9F3;
+                color: #C7C7D3;
+
+
+                th {
+                    font-weight: 600;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    border-bottom: 0;
+                }
+            }
+        }
+
+        tbody, thead {
+            tr {
+
+                &:nth-child(2n) {
+                    background-color: #FAFAFC;
+                }
+
+                td, th {
+                    overflow: auto;
+                    max-height: 50px;
+                    border-top: 1px solid #F7F7F8;
+                    font-size: 12px;
+                    color: #ACACB8;
+
+                    &:first-child {
+                        padding-left: 1rem;
+                    }
+
+                    &:last-child {
+                        div {
+                            flex-direction: row;
+                            align-items: center;
+                            justify-content: center;
+
+
+                            a {
+                                flex-basis: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                text-decoration: none;
+                                transition: .2s all;
+
+                                &:hover {
+                                    transform: scale(0.93)
+                                }
+
+                                &:last-child {
+                                    margin-right: 0;
+                                }
+
+                                i {
+                                    font-size: 1rem;
+                                    color: #ACACB8;
+                                }
+                            }
+                        }
+                    }
+
+                    div {
+                        min-height: 50px;
+                        max-height: 50px;
+                        overflow: auto;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+
+
+                        &::-webkit-scrollbar {
+                            width: 6px;
+                            height: 6px;
+                        }
+
+                        &::-webkit-scrollbar-track {
+                            background: #E9E9F3;
+                            border-radius: 20px;
+                        }
+
+                        &::-webkit-scrollbar-thumb {
+                            background: #D3D8DC;
+                            border-radius: 20px;
+                        }
+
+
+
+                        p {
+                            margin-bottom: 0;
+                            font-size: 13px;
+                            color: #ACACB8;
+                        }
+                    }
+                }
+
+                th {
+                    border-top: 0;
+                }
+            }
+        }
+    }
+}
