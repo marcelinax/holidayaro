@@ -1,5 +1,13 @@
 ﻿let hotels = [];
+let countries = [];
 const offersBox = document.getElementById('offers');
+const priceFilter = document.getElementById('price-filter-input');
+const minDaysFilter = document.getElementById('min-days-select');
+const maxDaysFilter = document.getElementById('max-days-select');
+const starsFilterBox = document.querySelector('.stars-filter-box');
+const countriesFilterBox = document.querySelector('.countries-filter-box');
+let filteredStarRating = -1;
+let filteredCountries = [];
 
 
 const drawRatingStars = (hotel) => {
@@ -17,7 +25,6 @@ const drawRatingStars = (hotel) => {
 
 
 const drawHotel = (hotel) => {
-    console.log(hotel.country);
     const hotelElement = document.createElement('div');
     hotelElement.classList.add('offer-box', 'col-4');
     const content = `
@@ -46,26 +53,114 @@ const drawHotel = (hotel) => {
 }
 
 
+const renderSelectOptions = () => {
+    for (let i = 1; i <= 28; i++) {
+        const optionElement = document.createElement('option');
+        optionElement.value = i;
+        if (i === 1) {
+            optionElement.innerHTML = `${i} day`;
+   
+        }
+        else {
+            optionElement.innerHTML = `${i} days`
+         
+            optionElement.addEventListener('click', () => {
+                minDaysFilter.value = i;
+            })
+           
+        };
+        minDaysFilter.appendChild(optionElement.cloneNode(true));
+        maxDaysFilter.appendChild(optionElement.cloneNode(true));
+        maxDaysFilter.value = 28;
+        minDaysFilter.value = 7;
+    }
+}
+
+const renderStarsFilterBoxButtons = () => {
+    for (let i = 0; i < 5; i++) {
+        const starFilterButton = document.createElement('button');
+        starFilterButton.classList.add('star-btn');
+        const content = `
+           <p>${i + 1}</p>
+           <i class='bx bxs-star'></i>
+        `;
+        starFilterButton.addEventListener('click', () => {
+            filteredStarRating = +i + 1;
+            drawHotels();
+        });
+        starFilterButton.innerHTML = content;
+        starsFilterBox.appendChild(starFilterButton)
+    }
+}
+
+const renderCountriesFilters = () => {
+    console.log(countries)
+    countries.forEach(country => {
+        const countryFilterBox = document.createElement('div');
+        countryFilterBox.classList.add('country-filter-box');
+        const content = `
+            <div class='checkbox'></div>
+            <p>${country}</p>
+        `;
+        
+        countryFilterBox.innerHTML = content;
+        countryFilterBox.addEventListener('click', () => {
+            filteredCountries.push(country);
+            drawHotels();
+        });
+        countriesFilterBox.appendChild(countryFilterBox);
+    })
+}
+
+
+const filteredHotels = () => {
+    let filtered = hotels;
+
+    const priceMax = priceFilter.value;
+    document.getElementById('price-filter-input-value').innerHTML = priceFilter.value;
+    if (priceMax) {
+        filtered = filtered.filter(h => h.price <= priceMax);
+    }
+    if (filteredStarRating !== -1) {
+        filtered = filtered.filter(h => Math.ceil(h.rating /2) === filteredStarRating);
+        console.log(filtered)
+    }
+    if (filteredCountries.length > 0) {
+        filtered = filtered.filter(h => filteredCountries.includes(h.country));
+    }
+    if (minDaysFilter.value) {
+        filtered = filtered.filter(h => h.days >= minDaysFilter.value );
+    }
+    if (maxDaysFilter.value) {
+        filtered = filtered.filter(h => h.days <= minDaysFilter.value );
+    }
+
+    return filtered;
+}
+
 const drawHotels = () => {
-    return hotels.forEach(hotel => {
+    offersBox.innerHTML = '';
+    return filteredHotels().forEach(hotel => {
         drawHotel(hotel);
     })
 
 }
 
+
+
+
 const getAllHotels = () => {
     fetch('/api/hotelsapi').then(res => res.json()).then(data => {
         hotels = data.$values;
-        console.log(hotels)
+        countries = data.$values.map(value => value.country);
+        renderCountriesFilters();
         drawHotels()
     })
 }
 
-
-
-
-
-
 getAllHotels();
+renderSelectOptions();
+renderStarsFilterBoxButtons();
+priceFilter.addEventListener('change', () => drawHotels());
+minDaysFilter.addEventListener('change', () => drawHotels());
 
-console.log(hotels)
