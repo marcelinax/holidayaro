@@ -21,6 +21,7 @@ const drawHotel = (hotel) => {
     const hotelElement = document.createElement('div');
     hotelElement.classList.add('offer-box', 'col-4');
     const content = `
+        <a href='/hotels/details/${hotel.hotelId}'>
         <div class='offer-box-bg' style="background-image: url(${hotel.photosUrls.$values.length > 0 ? hotel.photosUrls.$values[0].photoUrl: ""})">
         <div class='offer-box-bg-country'>
         <p>${hotel.country}</p>
@@ -38,6 +39,7 @@ const drawHotel = (hotel) => {
         <i class='bx bx-time'></i>
         <p>${hotel.days} days</p></div>
         </div>
+        </a>
      `;
     hotelElement.innerHTML = content;
     offersBox.appendChild(hotelElement);

@@ -33,7 +33,7 @@ namespace Holidayaro.Controllers
                 return NotFound();
             }
 
-            var hotel = await _context.Hotel.Include("HotelAttraction").FirstOrDefaultAsync(m => m.HotelId == id);
+            var hotel = await _context.Hotel.Include("HotelAttractions").Include("HotelDescriptions").Include("PhotosUrls").FirstOrDefaultAsync(m => m.HotelId == id);
             if (hotel == null)
             {
                 return NotFound();
