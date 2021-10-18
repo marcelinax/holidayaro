@@ -17,8 +17,8 @@ namespace Holidayaro.Models
         [Required]
         public string Country { get; set; }
         public int Price { get; set; }
-        [Required]
-        public double Rating { get; set; }
+        
+        public int Rating { get; set; }
         public int Days { get; set; }
         [Required]
         public string Room { get; set; }

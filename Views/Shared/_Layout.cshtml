@@ -6,11 +6,13 @@
     <title>@ViewData["Title"] - Holidayaro</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/styles/styles.css" />
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-   @Html.Partial("_Header")
-    <div class="container">
-        <main role="main" class="pb-3">
+    <partial name="_Header"/>
+
+    <div class="container-fluid">
+        <main role="main" class="pb-3 d-flex">
             @RenderBody()
         </main>
     </div>
