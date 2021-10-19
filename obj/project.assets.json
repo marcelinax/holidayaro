@@ -7593,19 +7593,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Marcelina\\.nuget\\packages\\": {}
+    "C:\\Users\\Cysia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Studia\\Semestr 5\\Holidayaro\\Holidayaro.csproj",
+      "projectUniqueName": "C:\\Users\\Cysia\\Documents\\GitHub\\holidayaro\\Holidayaro.csproj",
       "projectName": "Holidayaro",
-      "projectPath": "D:\\Studia\\Semestr 5\\Holidayaro\\Holidayaro.csproj",
-      "packagesPath": "C:\\Users\\Marcelina\\.nuget\\packages\\",
-      "outputPath": "D:\\Studia\\Semestr 5\\Holidayaro\\obj\\",
+      "projectPath": "C:\\Users\\Cysia\\Documents\\GitHub\\holidayaro\\Holidayaro.csproj",
+      "packagesPath": "C:\\Users\\Cysia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Cysia\\Documents\\GitHub\\holidayaro\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Marcelina\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Cysia\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

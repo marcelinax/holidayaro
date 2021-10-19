@@ -6,6 +6,7 @@ const minDaysFilter = document.getElementById('min-days-select');
 const maxDaysFilter = document.getElementById('max-days-select');
 const starsFilterBox = document.querySelector('.stars-filter-box');
 const countriesFilterBox = document.querySelector('.countries-filter-box');
+const filteredResults = document.getElementById('results');
 let filteredStarRating = -1;
 let filteredCountries = [];
 
@@ -117,7 +118,7 @@ const filteredHotels = () => {
     let filtered = hotels;
 
     const priceMax = priceFilter.value;
-    document.getElementById('price-filter-input-value').innerHTML = priceFilter.value;
+    document.getElementById('price-filter-input-value').innerHTML = `$${priceFilter.value}`;
     if (priceMax) {
         filtered = filtered.filter(h => h.price <= priceMax);
     }
@@ -134,7 +135,7 @@ const filteredHotels = () => {
     if (maxDaysFilter.value) {
         filtered = filtered.filter(h => h.days <= minDaysFilter.value );
     }
-
+    filteredResults.innerHTML = `Found ${filtered.length}`;
     return filtered;
 }
 
