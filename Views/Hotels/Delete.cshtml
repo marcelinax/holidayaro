@@ -13,68 +13,19 @@
         <span class="name">@Model.Name</span>
         <span>? You will not be able to recover them.</span>
     </div>
-    <div class="removal-modal-btns mt-5">
-        <input type="submit" class="btn" value="Delete"/>
-        <a class="btn" asp-action="Index">Cancel</a>
-    </div>
-    
-</div>
-
-@*<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Hotel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Days)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Days)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Room)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Room)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Board)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Board)
-        </dd>
-    </dl>
-    
     <form asp-action="Delete">
-        <input type="hidden" asp-for="HotelId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <div class="removal-modal-btns mt-5">
+
+            <input type="hidden" asp-for="HotelId" />
+            <input type="submit" class="btn" value="Delete" />
+            <a class="btn btn-without-bg" asp-action="Index">Cancel</a>
+
+
+        </div>
     </form>
 </div>
-*@
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

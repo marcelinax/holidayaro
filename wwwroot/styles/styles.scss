@@ -1133,25 +1133,33 @@ a {
         }
     }
 
-    &-btns {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        flex-direction: column;
+    form {
+        .removal-modal-btns {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            flex-direction: column;
 
-        .btn {
-            padding: .375rem 1.2rem;
-          
-
-            &:first-child {
+            .btn {
+                padding: .375rem 1.2rem;
                 color: white;
                 background-color: #EE443D;
                 margin-bottom: 10px;
+                box-shadow: unset;
+
+                &:first-child {
+                }
+
+                &:last-child {
+                }
             }
 
-            &:last-child {
+            .btn-without-bg {
                 color: #BEBEBE;
+                background-color: transparent !important;
             }
+
+           
         }
     }
 }
