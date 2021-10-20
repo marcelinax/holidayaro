@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="col-3 filter-box">
+<div class="col-2 filter-box">
     <div class="filter-box-top filter-box-item">
         <span id="results"></span>
         <p id="reset-filter-btn">Reset filter</p>
@@ -14,7 +14,7 @@
             <p id="price-filter-input-value"></p>
         </div>
        
-        <input type="range" min="0" max="30000" value="1000" id="price-filter-input" />
+        <input type="range" min="0" max="3000" value="3000" step="100" id="price-filter-input" />
     </div>
     <div class="filter-box-item">
         <label>Guests Rating</label>
@@ -37,9 +37,10 @@
 
         </div>
         </div>
+ 
     </div>
-    <div class="col-9">
-        <div class="row offers p-0" id="offers">
+    <div class="col-10 mx-auto">
+        <div class="row offers p-0 m-auto" id="offers">
 
         </div>
     </div>

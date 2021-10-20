@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Cysia\\Documents\\GitHub\\holidayaro\\Holidayaro.csproj": {}
+    "D:\\Studia\\Semestr 5\\Holidayaro\\Holidayaro.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Cysia\\Documents\\GitHub\\holidayaro\\Holidayaro.csproj": {
+    "D:\\Studia\\Semestr 5\\Holidayaro\\Holidayaro.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Cysia\\Documents\\GitHub\\holidayaro\\Holidayaro.csproj",
+        "projectUniqueName": "D:\\Studia\\Semestr 5\\Holidayaro\\Holidayaro.csproj",
         "projectName": "Holidayaro",
-        "projectPath": "C:\\Users\\Cysia\\Documents\\GitHub\\holidayaro\\Holidayaro.csproj",
-        "packagesPath": "C:\\Users\\Cysia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Cysia\\Documents\\GitHub\\holidayaro\\obj\\",
+        "projectPath": "D:\\Studia\\Semestr 5\\Holidayaro\\Holidayaro.csproj",
+        "packagesPath": "C:\\Users\\Marcelina\\.nuget\\packages\\",
+        "outputPath": "D:\\Studia\\Semestr 5\\Holidayaro\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Cysia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Marcelina\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

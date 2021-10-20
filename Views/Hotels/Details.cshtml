@@ -2,61 +2,179 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_DetailsLayout.cshtml";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Hotel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+<script>
+    var hotelRating = @Model.Rating;
   
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Days)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Days)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Room)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Room)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Board)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Board)
-        </dd>
-    </dl>
+</script>
+
+
+<div class="current-offer">
+    <div class="image-modal">
+        <div class="image-modal-img"></div>
+    </div>
+    <div class="current-offer-top">
+        <p>@Model.Country</p>
+        <span>/</span>
+        <p>@Model.Name</p>
+    </div>
+    <div class="current-offer-top-box row mt-3 mx-0 bg-light">
+        <div class="col-8 px-0">
+            <div class="current-offer-bg" style="background-image: url(@Model.PhotosUrls.First().PhotoUrl)"></div>
+            <div class="row mx-0 current-offer-top-box-gallery">
+                <button class="gallery-btn">
+                    <i class='bx bx-chevron-left'></i>
+                </button>
+                <div class="current-offer-top-box-gallery-images">
+                    @*setCurrentOfferImg(@Html.DisplayFor(m => element.PhotoUrl))*@
+                    @foreach (var element in Model.PhotosUrls)
+                    {
+                        <div class="current-offer-top-box-gallery-item" onclick="document.querySelector('.current-offer-bg').style.backgroundImage = @Html.Raw(element.PhotoUrl)">
+                            <div class="current-offer-top-box-gallery-item-img" style="background-image: url(@Html.DisplayFor(m => element.PhotoUrl))"></div>
+                        </div>
+                    }
+                </div>
+
+                <button class="gallery-btn">
+                    <i class='bx bx-chevron-right'></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-4 d-flex pl-0 pr-0  flex-column">
+            <div class="current-offer-item-box ">
+                <div class="current-offer-item-box-inside flex-column">
+                    <h6>@Model.Name.ToUpper()</h6>
+                    <div class="current-offer-stars-box"></div>
+                </div>
+            </div>
+            <div class="current-offer-item-box">
+                <div class="current-offer-item-box-inside">
+                    <h5>@Model.Country </h5>
+                    <div class="current-offer-stars-box"></div>
+                </div>
+            </div>
+            <div class="row mx-0">
+                <div class="col-6 current-offer-item-box">
+                    <div class="current-offer-item-box-inside flex-column align-items-center justify-content-center">
+                        <p class="bold-info">@Model.Days</p>
+                        <span>days</span>
+                    </div>
+                </div>
+                <div class="col-6 current-offer-item-box">
+                    <div class="current-offer-item-box-inside flex-column align-items-center justify-content-center">
+                        <div class="row mx-0  align-items-end">
+                            <p class="bold-info">@Model.Rating</p>
+                            <span>/</span>
+                            <span>10</span>
+                        </div>
+
+                        <span>guest ratings</span>
+                    </div>
+                </div>
+            </div>
+            <div class="current-offer-item-box  align-items-center justify-content-center border-bottom-0">
+                <div class="current-offer-item-box-inside flex-column">
+                    <button class="btn mb-3">
+                        BOOK NOW
+                    </button>
+                    <a href="/" class="btn">
+                            GO BACK
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="current-offer-bottom mt-4  pb-5">
+        <div class="row mx-0">
+            <div class="col-8 current-offer-bottom-hotel-information-box px-0 ">
+                <div class="current-offer-bottom-hotel-information-box-menu px-0">
+
+                    <div class="col-4 px-0">
+                        <button class="btn" id="hotel-btn">
+                            <i class='bx bx-building'></i>
+                            <p>Hotel</p>
+                        </button>
+                    </div>
+                    <div class="col-4 px-0">
+                        <button class="btn" id="room-btn">
+                            <i class='bx bx-hotel'></i>
+                            <p>Rooms</p>
+                        </button>
+                    </div>
+                    <div class="col-4  px-0">
+                        <button class="btn" id="board-btn">
+                            <i class='bx bx-dish'></i>
+                            <p>Board</p>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="current-offer-bottom-hotel-information-box-main">
+                    <div class="row mx-0">
+                        <div class="current-offer-bottom-hotel-information-box-main-hotel mb-3">
+                            <div class="d-flex w-100 flex-column">
+                                <h6 class="pl-4 mb-0 mt-3">Hotel descriptions</h6>
+                                <hr class="w-100 mt-2" />
+                            </div>
+                            @foreach (var element in Model.HotelDescriptions)
+                            {
+                                <div class="col-4 hotel-description">
+                                    <div class="icon-box">
+                                        <i class='bx bxs-sun'></i>
+                                    </div>
+
+                                    <p>@Html.DisplayFor(h => element.Name)</p>
+                                </div>
+                            }
+                            <div class="d-flex w-100 flex-column mt-4">
+                                <h6 class="pl-4 mb-0 mt-3">Hotel attractions</h6>
+                                <hr class="w-100 mt-2" />
+                            </div>
+                            @foreach (var element in Model.HotelAttractions)
+                            {
+                                <div class="col-4 hotel-attraction">
+                                    <div class="icon-box">
+                                        <i class='bx bxs-wine'></i>
+                                    </div>
+
+                                    <p>@Html.DisplayFor(h => element.Name)</p>
+                                </div>
+                            }
+                        </div>
+                        <div class="current-offer-bottom-hotel-information-box-main-room mb-3">
+                            <div class="col mt-3">
+                                <p class="description">@Html.Raw(Model.Room.Replace(";", "<br />"))</p>
+                            </div>
+
+                        </div>
+
+                        <div class="current-offer-bottom-hotel-information-box-main-board mb-3">
+                            <div class="col mt-3">
+                                <p class="description">@Html.Raw(Model.Board.Replace(";", "<br />"))</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 mt-0 pr-0">
+                <div class="current-offer-bottom-offers-box">
+                    <div class="current-offer-bottom-offers-box-inside">
+                        <h4>You May Also Like</h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.HotelId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/offerDetails.js" asp-append-version="true"></script>
+}

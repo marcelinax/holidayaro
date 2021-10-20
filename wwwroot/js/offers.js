@@ -9,6 +9,9 @@ const countriesFilterBox = document.querySelector('.countries-filter-box');
 const filteredResults = document.getElementById('results');
 let filteredStarRating = -1;
 let filteredCountries = [];
+const resetFiltersBtn = document.getElementById('reset-filter-btn');
+
+
 
 
 const drawRatingStars = (hotel) => {
@@ -23,12 +26,26 @@ const drawRatingStars = (hotel) => {
     return stars;
 }
 
-
+const resetFilters = () => {
+    resetFiltersBtn.addEventListener('click', () => {
+        filteredStarRating = -1;
+        filteredCountries = [];
+        minDaysFilter.value = 7;
+        maxDaysFilter.value = 28;
+        priceFilter.value = 3000;
+        document.getElementById('price-filter-input-value').innerHTML = `$${priceFilter.value}`;
+        drawHotels();
+        renderCountriesFilters();
+        renderStarsFilterBoxButtons();
+    })
+   
+}
 
 const drawHotel = (hotel) => {
     const hotelElement = document.createElement('div');
-    hotelElement.classList.add('offer-box', 'col-4');
+    hotelElement.classList.add('col-4');
     const content = `
+        <div class="offer-box mb-5">
         <a href='/hotels/details/${hotel.hotelId}'>
         <div class='offer-box-bg' style="background-image: url(${hotel.photosUrls.$values.length > 0 ? hotel.photosUrls.$values[0].photoUrl: ""})">
         <div class='offer-box-bg-country'>
@@ -48,6 +65,7 @@ const drawHotel = (hotel) => {
         <p>${hotel.days} days</p></div>
         </div>
         </a>
+        </div>
      `;
     hotelElement.innerHTML = content;
     offersBox.appendChild(hotelElement);
@@ -77,27 +95,42 @@ const renderSelectOptions = () => {
     }
 }
 
+
 const renderStarsFilterBoxButtons = () => {
+    starsFilterBox.innerHTML = '';
     for (let i = 0; i < 5; i++) {
+      
         const starFilterButton = document.createElement('button');
+        starFilterButton.classList.remove('star-btn--active');
+        if (+i + 1 === filteredStarRating) {
+            starFilterButton.classList.add('star-btn--active');
+        }
         starFilterButton.classList.add('star-btn');
         const content = `
            <p>${i + 1}</p>
            <i class='bx bxs-star'></i>
         `;
+       
         starFilterButton.addEventListener('click', () => {
+            starFilterButton.classList.add('star-btn--active');
             filteredStarRating = +i + 1;
             drawHotels();
+            renderStarsFilterBoxButtons();
         });
         starFilterButton.innerHTML = content;
         starsFilterBox.appendChild(starFilterButton)
+       
     }
 }
 
 const renderCountriesFilters = () => {
-    console.log(countries)
+    countriesFilterBox.innerHTML = '';
     countries.forEach(country => {
         const countryFilterBox = document.createElement('div');
+        countryFilterBox.classList.remove('chosen');
+        if (filteredCountries.includes(country)) {
+            countryFilterBox.classList.add('chosen');
+        }
         countryFilterBox.classList.add('country-filter-box');
         const content = `
             <div class='checkbox'></div>
@@ -106,8 +139,16 @@ const renderCountriesFilters = () => {
         
         countryFilterBox.innerHTML = content;
         countryFilterBox.addEventListener('click', () => {
-            filteredCountries.push(country);
+            if (filteredCountries.includes(country)) {
+                filteredCountries.splice(filteredCountries[country], 1);
+            }
+            else {
+                countryFilterBox.classList.add('chosen');
+                filteredCountries.push(country);
+            }
+            
             drawHotels();
+            renderCountriesFilters();
         });
         countriesFilterBox.appendChild(countryFilterBox);
     })
@@ -164,4 +205,4 @@ renderSelectOptions();
 renderStarsFilterBoxButtons();
 priceFilter.addEventListener('change', () => drawHotels());
 minDaysFilter.addEventListener('change', () => drawHotels());
-
+resetFilters();

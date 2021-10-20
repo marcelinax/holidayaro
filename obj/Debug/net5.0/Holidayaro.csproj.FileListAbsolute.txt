@@ -892,3 +892,4 @@ C:\Users\Cysia\Documents\GitHub\holidayaro\obj\Debug\net5.0\ref\Holidayaro.dll
 C:\Users\Cysia\Documents\GitHub\holidayaro\obj\Debug\net5.0\Holidayaro.pdb
 C:\Users\Cysia\Documents\GitHub\holidayaro\obj\Debug\net5.0\Holidayaro.genruntimeconfig.cache
 C:\Users\Cysia\Documents\GitHub\holidayaro\obj\Debug\net5.0\Holidayaro.csproj.CopyComplete
+D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\Shared\_DetailsLayout.cshtml.g.cs

@@ -8,20 +8,15 @@
     <link rel="stylesheet" href="~/styles/styles.css" />
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<body>
-    <partial name="_Header"/>
+<body style="background-color: #F2F2F2">
 
-    <div class="container-fluid home-layout">
-        <main role="main" class=" d-flex my-5">
+    <div class="container details-layout ">
+        <main role="main"  >
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Holidayaro - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
