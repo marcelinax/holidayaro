@@ -8,6 +8,8 @@ const galleryImages = document.querySelectorAll('.current-offer-top-box-gallery-
 const imageModalImg = document.querySelector('.image-modal-img');
 const imageModalBox = document.querySelector('.image-modal');
 const closeImageModalBtn = document.getElementById('close-image-modal');
+const currentHotelPathElements = location.pathname.split('/');
+
 
 let currentMenuLink = 'hotel';
 let hotels = [];
@@ -16,12 +18,11 @@ let hotels = [];
 const setCurrentOfferImg = (img) => {
     galleryImages.forEach(galleryImg => {
         galleryImg.classList.remove('current');
-        if (galleryImg.firstElementChild.style.backgroundImage.substring(5, galleryImg.firstElementChild.style.backgroundImage.length - 2) == img)
-        {
+        if (galleryImg.firstElementChild.style.backgroundImage.substring(5, galleryImg.firstElementChild.style.backgroundImage.length - 2) == img) {
             galleryImg.classList.add('current');
         }
-        });
-   
+    });
+
 
     currentOfferImg.style.backgroundImage = `url(${img})`;
 }
@@ -47,12 +48,20 @@ const renderStars = (rating) => {
 
 
 const renderProposedOffers = () => {
+    const currentHotelId = currentHotelPathElements[currentHotelPathElements.length - 1];
+    
     let randomHotels = [];
     for (let i = 0; i < 3; i++) {
-        const randomHotel = Math.floor(Math.random() * hotels.length)
+        let randomHotel;
+
+        do {
+            randomHotel = Math.floor(Math.random() * hotels.length)
+        }
+        while (randomHotels.includes(hotels[randomHotel]) || hotels[randomHotel].hotelId === +currentHotelId );
+       
+        console.log(hotels)
         randomHotels.push(hotels[randomHotel]);
     }
-    console.log(randomHotels)
     randomHotels.forEach(hotel => {
         const proposedOfferBox = document.createElement('div');
         proposedOfferBox.classList.add('current-offer-bottom-offers-box-item');

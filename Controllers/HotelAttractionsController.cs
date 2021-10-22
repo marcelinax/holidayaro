@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Holidayaro.Data;
 using Holidayaro.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Holidayaro.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class HotelAttractionsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -45,6 +47,7 @@ namespace Holidayaro.Controllers
         // PUT: api/HotelAttractions/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutHotelAttraction(int id, HotelAttraction hotelAttraction)
         {
             if (id != hotelAttraction.HotelAttractionId)
@@ -76,6 +79,7 @@ namespace Holidayaro.Controllers
         // POST: api/HotelAttractions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<HotelAttraction>> PostHotelAttraction(HotelAttraction hotelAttraction)
         {
             _context.HotelAttraction.Add(hotelAttraction);
@@ -86,6 +90,7 @@ namespace Holidayaro.Controllers
 
         // DELETE: api/HotelAttractions/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteHotelAttraction(int id)
         {
             var hotelAttraction = await _context.HotelAttraction.FindAsync(id);

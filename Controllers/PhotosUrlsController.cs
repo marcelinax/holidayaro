@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Holidayaro.Data;
 using Holidayaro.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Holidayaro.Controllers
 {
@@ -45,6 +46,7 @@ namespace Holidayaro.Controllers
         // PUT: api/PhotosUrls/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutPhotosUrl(int id, PhotosUrl photosUrl)
         {
             if (id != photosUrl.PhotosUrlId)
@@ -76,6 +78,7 @@ namespace Holidayaro.Controllers
         // POST: api/PhotosUrls
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<PhotosUrl>> PostPhotosUrl(PhotosUrl photosUrl)
         {
             _context.PhotosUrl.Add(photosUrl);
@@ -86,6 +89,7 @@ namespace Holidayaro.Controllers
 
         // DELETE: api/PhotosUrls/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeletePhotosUrl(int id)
         {
             var photosUrl = await _context.PhotosUrl.FindAsync(id);

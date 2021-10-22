@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Holidayaro.Data;
 using Holidayaro.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Holidayaro.Controllers
 {
@@ -20,6 +21,7 @@ namespace Holidayaro.Controllers
         }
 
         // GET: Hotels
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Hotel.Include("HotelAttractions").Include("HotelDescriptions").Include("PhotosUrls").ToListAsync());
@@ -43,6 +45,7 @@ namespace Holidayaro.Controllers
         }
 
         // GET: Hotels/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -53,6 +56,7 @@ namespace Holidayaro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("HotelId,Name,Country,Price,PhotoUrl,Rating,Days,Room,Board")] Hotel hotel)
         {
             if (ModelState.IsValid)
@@ -65,6 +69,7 @@ namespace Holidayaro.Controllers
         }
 
         // GET: Hotels/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,6 +90,7 @@ namespace Holidayaro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("HotelId,Name,Country,Price,PhotoUrl,Rating,Days,Room,Board")] Hotel hotel)
         {
             if (id != hotel.HotelId)
@@ -116,6 +122,7 @@ namespace Holidayaro.Controllers
         }
 
         // GET: Hotels/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,6 +143,7 @@ namespace Holidayaro.Controllers
         // POST: Hotels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var hotel = await _context.Hotel.FindAsync(id);
