@@ -13,6 +13,7 @@
 
 <div class="current-offer">
     <div class="image-modal">
+        <i class='bx bx-x ' id="close-image-modal"></i>
         <div class="image-modal-img"></div>
     </div>
     <div class="current-offer-top">
@@ -22,16 +23,15 @@
     </div>
     <div class="current-offer-top-box row mt-3 mx-0 bg-light">
         <div class="col-8 px-0">
-            <div class="current-offer-bg" style="background-image: url(@Model.PhotosUrls.First().PhotoUrl)"></div>
+            <div class="current-offer-bg" style="background-image: url(@Model.PhotosUrls.First().PhotoUrl)" ></div>
             <div class="row mx-0 current-offer-top-box-gallery">
                 <button class="gallery-btn">
                     <i class='bx bx-chevron-left'></i>
                 </button>
                 <div class="current-offer-top-box-gallery-images">
-                    @*setCurrentOfferImg(@Html.DisplayFor(m => element.PhotoUrl))*@
                     @foreach (var element in Model.PhotosUrls)
                     {
-                        <div class="current-offer-top-box-gallery-item" onclick="document.querySelector('.current-offer-bg').style.backgroundImage = @Html.Raw(element.PhotoUrl)">
+                        <div class="current-offer-top-box-gallery-item" onclick="setCurrentOfferImg('@Html.Raw(element.PhotoUrl)')">
                             <div class="current-offer-top-box-gallery-item-img" style="background-image: url(@Html.DisplayFor(m => element.PhotoUrl))"></div>
                         </div>
                     }
