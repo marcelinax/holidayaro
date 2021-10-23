@@ -2,11 +2,12 @@
 
 
 @keyframes showImageModal {
-    0%{
-        height:0;
+    0% {
+        height: 0;
     }
-    100%{
-        height:50%;
+
+    100% {
+        height: 50%;
     }
 }
 
@@ -249,7 +250,10 @@
 }
 
 .admin-layout {
+    height: 100vh;
+
     main {
+        height: 100%;
 
         .bg-img {
             width: 50%;
@@ -440,7 +444,6 @@
         box-shadow: 0 0 15px rgba(#000, .2);
         padding: unset;
         border-radius: 20px;
-
         cursor: pointer;
         transition: .2s all;
         overflow: hidden;
@@ -459,8 +462,7 @@
             position: relative;
 
             &-country, &-price {
-                min-width: 100px;
-                max-width: 120px;
+               width:120px;
                 background-color: #FD9A09;
                 padding: 3px 0;
                 position: absolute;
@@ -476,6 +478,7 @@
                     color: white;
                     font-size: 13px;
                     font-weight: 500;
+                 
                 }
             }
 
@@ -624,14 +627,12 @@
             cursor: pointer;
             transition: .2s all;
 
-            
+
 
             &:hover {
                 p {
                     font-weight: 500;
                 }
-
-                
             }
 
             &:last-child {
@@ -717,12 +718,13 @@
 
 input, button, .btn, select {
     outline: none;
-    box-shadow: unset;
+    box-shadow: unset !important;
 }
 
 a {
     text-decoration: none !important;
 }
+
 .details-layout {
     width: 100%;
     height: 100vh;
@@ -1143,7 +1145,7 @@ a {
     }
 }
 
-.removal-modal {
+.removal-modal, .login-form, .register-form {
     width: 30%;
     height: 50vh;
     background-color: #F5F5F5;
@@ -1209,8 +1211,75 @@ a {
                 color: #BEBEBE;
                 background-color: transparent !important;
             }
-
-           
         }
+    }
+}
+
+.login-form, .register-form {
+    &-img {
+        background-image: url('../assets/undraw_Login_re_4vu2.svg')
+    }
+
+
+    .login-form-box, .register-form-box {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        &-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+            width: 100%;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            input {
+                border: 1px solid #CCCCCC;
+                background-color: transparent;
+                border-radius: 5px;
+                color: #434343;
+                font-size: 12px;
+                padding: 3px;
+            }
+
+            label {
+                color: #434343;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            button {
+                background-color: #6C63FF;
+                color: white;
+                transition: .2s all;
+
+                &:hover {
+                    transform: scale(0.9);
+                }
+            }
+        }
+    }
+
+    .text-danger {
+        font-size: 11px;
+    }
+}
+
+.register-form {
+    &-img {
+        
+        background-image: url('../assets//undraw_welcome_cats_thqn.svg');
+      
+    }
+}
+
+
+.reservation-modal{
+    display: none;
+    &.show{
+        display:flex;
     }
 }

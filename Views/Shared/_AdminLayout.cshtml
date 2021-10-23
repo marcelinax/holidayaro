@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="~/styles/styles.css" />
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<body style="background-color: #F0F1F6" >
-    <div class="admin-layout d-flex" >
+<body style="background-color: #F0F1F6">
+    <div class="admin-layout d-flex">
         <div class="sidebar d-flex flex-column justify-content-center align-items-center">
             <a class="sidebar-link-item" asp-controller="Home" asp-action="Index">
                 <i class='bx bx-home'></i>
@@ -30,12 +30,13 @@
             </main>
         </div>
     </div>
-    
+
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/userToken.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

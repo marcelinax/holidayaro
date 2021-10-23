@@ -11,15 +11,16 @@
 <body style="background-color: #F2F2F2">
 
     <div class="container details-layout ">
-        <main role="main"  >
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-
+    <script src="https://momentjs.com/downloads/moment.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/userToken.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

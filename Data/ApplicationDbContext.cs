@@ -17,5 +17,6 @@ namespace Holidayaro.Data
         public DbSet<Holidayaro.Models.HotelDescription> HotelDescription { get; set; }
         public DbSet<Holidayaro.Models.Hotel> Hotel { get; set; }
         public DbSet<Holidayaro.Models.PhotosUrl> PhotosUrl { get; set; }
+        public DbSet<Holidayaro.Models.Reservation> Reservation { get; set; }
     }
 }

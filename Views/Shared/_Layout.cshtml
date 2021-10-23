@@ -9,7 +9,7 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    <partial name="_Header"/>
+    <partial name="_Header" />
 
     <div class="container-fluid home-layout">
         <main role="main" class=" d-flex my-5">
@@ -22,9 +22,12 @@
             &copy; 2021 - Holidayaro - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/userToken.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

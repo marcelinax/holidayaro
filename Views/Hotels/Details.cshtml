@@ -20,6 +20,43 @@
         <span>/</span>
         <p>@Model.Name</p>
     </div>
+
+    <div class="reservation-modal">
+        <div class="reservation-modal-img"></div>
+        <h4>Reservation</h4>
+        <div class="reservation-modal-form">
+            <div class="reservation-modal-form-group" >
+                <label>Name</label>
+                <input id="name-input" type="text"/>
+                <span id="name-error"></span>
+            </div>
+            <div class="reservation-modal-form-group">
+                <label>Surname</label>
+                <input id="surname-input" type="text" />
+                <span id="surname-error"></span>
+            </div>
+            <div class="reservation-modal-form-group">
+                <label>Email</label>
+                <input id="email-input" type="text" />
+                <span id="email-error"></span>
+            </div> 
+            <div class="reservation-modal-form-group">
+                <label>Phone</label>
+                <input id="phone-input" type="text" />
+                <span id="phone-error"></span>
+            </div> 
+            <div class="reservation-modal-form-group">
+                <label>Date of birth</label>
+                <input id="date-of-birth-input" type="date" />
+                <span id="date-of-birth-error"></span>
+            </div>
+            <div class="reservation-modal-form-group">
+               <button id="payment-btn">GO TO PAYMENT</button>
+               <button id="cancel-btn">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
     <div class="current-offer-top-box row mt-3 mx-0 bg-light">
         <div class="col-8 px-0">
             <div class="current-offer-bg" style="background-image: url(@Model.PhotosUrls.First().PhotoUrl)" ></div>
@@ -75,7 +112,7 @@
             </div>
             <div class="current-offer-item-box  align-items-center justify-content-center border-bottom-0">
                 <div class="current-offer-item-box-inside flex-column">
-                    <button class="btn mb-3">
+                    <button class="btn mb-3" id="book-btn">
                         BOOK NOW
                     </button>
                     <a href="/" class="btn">
@@ -176,4 +213,6 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/offerDetails.js" asp-append-version="true"></script>
+    <script src="~/js/reservations.js" asp-append-version="true"></script>
+  
 }

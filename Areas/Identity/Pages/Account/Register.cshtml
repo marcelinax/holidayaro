@@ -1,0 +1,38 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+<div class="register-form m-auto">
+    <div class="register-form-img mt-2"></div>
+    <h5 class="mt-4">Sign Up</h5>
+    <div class="register-form-box">
+        <form id="account" method="post">
+            <div class="register-form-box-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="register-form-box-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="register-form-box-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword"  />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            
+            <div class="register-form-box-group  mt-4">
+                <button type="submit" class="btn ">Sign up</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

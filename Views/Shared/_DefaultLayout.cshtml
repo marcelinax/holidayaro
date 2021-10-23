@@ -10,17 +10,18 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body style="background-color: #F5F5F5">
-  
-    <div class="container default-layout justify-content-center align-items-center " >
+
+    <div class="container default-layout justify-content-center align-items-center ">
         <main role="main" class="d-flex   flex-column">
             @RenderBody()
         </main>
     </div>
 
-   
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/userToken.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
