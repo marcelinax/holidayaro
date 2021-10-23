@@ -462,7 +462,7 @@
             position: relative;
 
             &-country, &-price {
-               width:120px;
+                width: 120px;
                 background-color: #FD9A09;
                 padding: 3px 0;
                 position: absolute;
@@ -478,7 +478,6 @@
                     color: white;
                     font-size: 13px;
                     font-weight: 500;
-                 
                 }
             }
 
@@ -1145,7 +1144,7 @@ a {
     }
 }
 
-.removal-modal, .login-form, .register-form {
+.removal-modal, .login-form, .register-form, .reservation-modal {
     width: 30%;
     height: 50vh;
     background-color: #F5F5F5;
@@ -1270,16 +1269,95 @@ a {
 
 .register-form {
     &-img {
-        
         background-image: url('../assets//undraw_welcome_cats_thqn.svg');
-      
     }
 }
 
 
-.reservation-modal{
+.reservation-modal-bg {
     display: none;
-    &.show{
-        display:flex;
+
+    &.show {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(#000, .7);
+        width: 100vw;
+        height: 100vh;
+        z-index: 2;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.reservation-modal {
+    height: 80vh;
+
+    &-img {
+        background-image: url('../assets/undraw_well_done_i2wr.svg');
+    }
+
+    &-form {
+        width: calc(100% - 2rem);
+        display: flex;
+        padding: 0 1rem;
+        flex-direction: column;
+
+        &-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+
+            &:last-child {
+                margin-bottom: 0;
+                margin-top: 15px;
+                flex-direction: unset;
+            }
+
+            input {
+                border: 1px solid #CCCCCC;
+                background-color: transparent;
+                border-radius: 5px;
+                color: #434343;
+                font-size: 12px;
+                padding: 3px;
+            }
+
+            label {
+                color: #434343;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            span {
+                color: red;
+                font-size: 10px;
+            }
+
+            button {
+                background-color: #6C63FF;
+                color: white;
+                flex-basis: 50%;
+                transition: .2s all;
+
+                &:hover {
+                    color: white;
+                    transform: scale(0.9);
+                }
+
+                &:last-child {
+                    color: #6C63FF;
+                    background-color: transparent;
+                    margin-left: 10px;
+
+                    &:hover {
+                        color: #6C63FF;
+                        border: 1px solid #6C63FF;
+
+                    }
+                }
+            }
+        }
     }
 }

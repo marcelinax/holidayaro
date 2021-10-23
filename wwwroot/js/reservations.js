@@ -1,6 +1,6 @@
 ﻿const currentHotelPathArr = location.pathname.split('/');
-
-const reservationModal = document.querySelector('.reservation-modal');
+const reservationHeading = document.getElementById('reservation-heading');
+const reservationModal = document.querySelector('.reservation-modal-bg');
 const reservationBtn = document.getElementById('book-btn');
 const paymentBtn = document.getElementById('payment-btn');
 const nameInput = document.getElementById('name-input');
@@ -13,6 +13,7 @@ const dateOfBirthInput = document.getElementById('date-of-birth-input');
 const toggleShowReservationModal = () => {
     reservationBtn.addEventListener('click', () => {
         reservationModal.classList.add('show');
+        reservationHeading.innerHTML = `Reservation <strong style='color:#6C63FF'>${hotelName}</strong>`;
     });
     document.getElementById('cancel-btn').addEventListener('click', () => {
         reservationModal.classList.remove('show');

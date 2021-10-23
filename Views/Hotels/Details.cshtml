@@ -7,6 +7,7 @@
 
 <script>
     var hotelRating = @Model.Rating;
+    var hotelName = '@Model.Name';
 </script>
 
 
@@ -21,41 +22,44 @@
         <p>@Model.Name</p>
     </div>
 
-    <div class="reservation-modal">
-        <div class="reservation-modal-img"></div>
-        <h4>Reservation</h4>
-        <div class="reservation-modal-form">
-            <div class="reservation-modal-form-group" >
-                <label>Name</label>
-                <input id="name-input" type="text"/>
-                <span id="name-error"></span>
-            </div>
-            <div class="reservation-modal-form-group">
-                <label>Surname</label>
-                <input id="surname-input" type="text" />
-                <span id="surname-error"></span>
-            </div>
-            <div class="reservation-modal-form-group">
-                <label>Email</label>
-                <input id="email-input" type="text" />
-                <span id="email-error"></span>
-            </div> 
-            <div class="reservation-modal-form-group">
-                <label>Phone</label>
-                <input id="phone-input" type="text" />
-                <span id="phone-error"></span>
-            </div> 
-            <div class="reservation-modal-form-group">
-                <label>Date of birth</label>
-                <input id="date-of-birth-input" type="date" />
-                <span id="date-of-birth-error"></span>
-            </div>
-            <div class="reservation-modal-form-group">
-               <button id="payment-btn">GO TO PAYMENT</button>
-               <button id="cancel-btn">CANCEL</button>
+    <div class="reservation-modal-bg">
+        <div class="reservation-modal">
+            <div class="reservation-modal-img mt-1"></div>
+            <h4 class="my-4" id="reservation-heading">Reservation</h4>
+            <div class="reservation-modal-form">
+                <div class="reservation-modal-form-group">
+                    <label>Name</label>
+                    <input id="name-input" type="text" />
+                    <span id="name-error"></span>
+                </div>
+                <div class="reservation-modal-form-group">
+                    <label>Surname</label>
+                    <input id="surname-input" type="text" />
+                    <span id="surname-error"></span>
+                </div>
+                <div class="reservation-modal-form-group">
+                    <label>Email</label>
+                    <input id="email-input" type="text" />
+                    <span id="email-error"></span>
+                </div>
+                <div class="reservation-modal-form-group">
+                    <label>Phone</label>
+                    <input id="phone-input" type="text" />
+                    <span id="phone-error"></span>
+                </div>
+                <div class="reservation-modal-form-group">
+                    <label>Date of birth</label>
+                    <input id="date-of-birth-input" type="date" />
+                    <span id="date-of-birth-error"></span>
+                </div>
+                <div class="reservation-modal-form-group">
+                    <button id="payment-btn" class="btn">GO TO PAYMENT</button>
+                    <button id="cancel-btn" class="btn">CANCEL</button>
+                </div>
             </div>
         </div>
     </div>
+    
 
     <div class="current-offer-top-box row mt-3 mx-0 bg-light">
         <div class="col-8 px-0">
