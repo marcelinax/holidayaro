@@ -14,9 +14,7 @@ namespace Holidayaro.Models
         public int ReservationId { get; set; }
         [ForeignKey("ReservationId")]
         public Reservation Reservation { get; set; }
-        [CreditCard]
         public string CreditCardNumber { get; set; }
-        [EmailAddress]
         public string PaypalEmail { get; set; }
         public string CreditCardHolderName { get; set; }
         public string CreditCardExpirationMonth { get; set; }

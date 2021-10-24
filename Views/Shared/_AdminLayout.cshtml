@@ -19,9 +19,13 @@
                 <i class='bx bxs-hotel'></i>
                 <p>Hotels</p>
             </a>
-            <a class="sidebar-link-item" asp-controller="Hotels" asp-action="Index">
+            <a class="sidebar-link-item" asp-controller="ReservationsAdmin" asp-action="Index">
                 <i class='bx bx-book'></i>
                 <p>Reservations</p>
+            </a>
+            <a class="sidebar-link-item" asp-controller="PaymentsAdmin" asp-action="Index">
+                <i class='bx bx-dollar-circle'></i>
+                <p>Payments</p>
             </a>
         </div>
         <div class="container-fluid w-100">
@@ -32,10 +36,11 @@
     </div>
 
 
-
+    <script src="https://momentjs.com/downloads/moment.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/adminPanel.js" asp-append-version="true"></script>
     <script src="~/js/userToken.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

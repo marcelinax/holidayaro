@@ -1,0 +1,183 @@
+﻿
+@model IEnumerable<Holidayaro.Models.Payment>
+
+@{
+    ViewData["Title"] = "Payments";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h5>Payments</h5>
+
+
+<div class="table-box d-flex flex-column">
+    <div class="table-box-top d-flex justify-content-end align-items-center">
+        <div class="table-box-top-options d-flex align-items-end">
+            <div class="row mr-5 align-items-end">
+                <label class="mb-0 mr-2">Show items</label>
+                <select></select>
+            </div>
+            <div class="row align-items-end">
+                <label class="mb-0">Showing 1-10 of 140</label>
+                <div class="btns-box d-flex ml-3">
+                    <button class="btn"><i class='bx bx-chevron-left'></i></button>
+                    <button class="btn"><i class='bx bx-chevron-right'></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PaymentId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReservationId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reservation.Hotel.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreditCardNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreditCardHolderName)
+                </th>
+                <th>
+                   Credit Card Expiration
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreditCardCvv)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PaypalEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PaymentAmount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div> @Html.DisplayFor(modelItem => item.PaymentId)</div>
+                    </td>
+                    <td>
+                        <div> @Html.DisplayFor(modelItem => item.ReservationId)</div>
+                    </td>
+                    <td>
+                        <div>  @Html.DisplayFor(modelItem => item.Reservation.Name)  @Html.DisplayFor(modelItem => item.Reservation.Surname)</div>
+                    </td>
+                    <td>
+                        <div> @Html.DisplayFor(modelItem => item.CreditCardNumber)</div>
+                    </td>
+                    <td>
+                        <div> @Html.DisplayFor(modelItem => item.CreditCardHolderName)</div>
+                    </td>
+                    <td>
+                        <div>@Html.DisplayFor(modelItem => item.CreditCardExpirationMonth).@Html.DisplayFor(modelItem => item.CreditCardExpirationYear)</div>
+                    </td>
+                    <td>
+                        <div>@Html.DisplayFor(modelItem => item.CreditCardCvv)</div>
+                    </td>
+                    <td>
+                        <div>@Html.DisplayFor(modelItem => item.PaypalEmail)</div>
+                    </td>
+                    <td>
+                        <div>@Html.DisplayFor(modelItem => item.PaymentAmount)</div>
+                    </td>
+                  
+
+
+
+                    <td>
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@item.PaymentId">
+                                <i class='bx bx-edit'></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.PaymentId">
+                                <i class='bx bx-trash-alt'></i>
+                            </a>
+                        </div>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditCardNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaypalEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditCardHolderName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditCardExpirationMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditCardExpirationYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditCardCvv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentAmount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reservation.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditCardNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaypalEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditCardHolderName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditCardExpirationMonth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditCardExpirationYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditCardCvv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentAmount)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PaymentId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.PaymentId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PaymentId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+*@

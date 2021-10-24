@@ -76,9 +76,11 @@ const initCreatePayment = () => {
             CreditCardHolderName: creditCardHolderNameInput.value,
             CreditCardExpirationMonth: monthSelect.value,
             CreditCardExpirationYear: yearSelect.value,
-            CreditCardCvv: cvvInput.value
+            CreditCardCvv: cvvInput.value,
+            ReservationId: reservationToPayId,
+            PaymentAmount: hotelPrice
+            
         }
-        console.log('a')
 
         if (paymentValidation()) {
             fetch('/api/payments', {
@@ -89,8 +91,9 @@ const initCreatePayment = () => {
                 body: JSON.stringify(paymentForm)
             }).then(res => res.json()).then(data => {
 
-                reservationToPayId = null;
+               
                 alert('Payment has been confirmed!');
+                reservationToPayId = null;
                 togglePaymentModal();
             });
         }
@@ -110,7 +113,7 @@ const clearPaymentValidation = () => {
 const paymentValidation = () => {
     let isValid = true;
     const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    const cardNumberRegex = /^[0-9]{15,16}$/;
+    const cardNumberRegex = /[0-9]{12}(?:[0-9]{3})?$/;
     clearPaymentValidation();
     if (paymentMethod === 'card') {
         if (creditCardNumberInput.value === '') {
@@ -168,7 +171,8 @@ const initCreateReservation = () => {
             DateOfBirth: dateOfBirthInput.value,
             HotelId: currentHotelId,
             UserToken: userToken,
-            PaymentAmount: hotelPrice
+            PaymentAmount: hotelPrice,
+            Date: moment(new Date())
 
         };
         if (checkReservationValidation()) {
@@ -193,6 +197,10 @@ const initCreateReservation = () => {
 const checkReservationValidation = () => {
     let isValid = true;
     clearValidation();
+
+    const phoneRegex = /^\d{10}$/;
+    const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
     if (nameInput.value === '') {
         document.getElementById('name-error').innerHTML = "The Name field is required.";
         isValid = false;
@@ -205,8 +213,16 @@ const checkReservationValidation = () => {
         document.getElementById('email-error').innerHTML = "The Email field is required.";
         isValid = false;
     }
+    if (!emailRegex(emailInput.value)) {
+        document.getElementById('email-error').innerHTML = "Invalid Email.";
+        isValid = false;
+    }
     if (phoneInput.value === '') {
         document.getElementById('phone-error').innerHTML = "The Phone field is required.";
+        isValid = false;
+    }
+    if (!phoneRegex.test(phoneInput.value)) {
+        document.getElementById('phone-error').innerHTML = "Invalid Phone.";
         isValid = false;
     }
     if (dateOfBirthInput.value === '') {

@@ -62,6 +62,21 @@
                 border-bottom: 2px solid rgba(255, 255, 255, 0.3);
                 position: relative;
 
+                &.active {
+                    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+                    position: relative;
+
+                    &::after {
+                        content: '';
+                        width: 30%;
+                        background-color: white;
+                        height: 4px;
+                        position: absolute;
+                        bottom: -2px;
+                        left: 30%;
+                        transform: translateX(-30%);
+                    }
+                }
 
                 &:hover {
                     &::after {
@@ -229,6 +244,10 @@
         transition: .2s all;
         text-decoration: none !important;
 
+        &.active {
+            background-color: #3A384E;
+        }
+
         i {
             margin-left: 2rem;
             color: #828293;
@@ -356,6 +375,15 @@
                     border-top: 1px solid #F7F7F8;
                     font-size: 12px;
                     color: #ACACB8;
+
+                    a {
+                        text-decoration: none;
+                        color: #ACACB8;
+                        transition: .2s all;
+                        &:hover{
+                            font-weight: 500;
+                        }
+                    }
 
                     &:first-child {
                         padding-left: 1rem;
@@ -1292,7 +1320,7 @@ a {
 }
 
 .reservation-modal {
-    height: 80vh;
+    height: 75vh;
 
     &-img {
         background-image: url('../assets/undraw_well_done_i2wr.svg');
@@ -1307,7 +1335,8 @@ a {
         &-group {
             display: flex;
             flex-direction: column;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            position: relative;
 
             &:last-child {
                 margin-bottom: 0;
@@ -1333,6 +1362,8 @@ a {
             span {
                 color: #FF6584;
                 font-size: 10px;
+                position: absolute;
+                bottom: -15px;
             }
 
             button {

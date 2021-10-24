@@ -904,3 +904,7 @@ D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\ReservationsAdmin\De
 D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\ReservationsAdmin\Details.cshtml.g.cs
 D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\ReservationsAdmin\Edit.cshtml.g.cs
 D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\ReservationsAdmin\Index.cshtml.g.cs
+D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\PaymentsAdmin\Delete.cshtml.g.cs
+D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\PaymentsAdmin\Details.cshtml.g.cs
+D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\PaymentsAdmin\Edit.cshtml.g.cs
+D:\Studia\Semestr 5\Holidayaro\obj\Debug\net5.0\Razor\Views\PaymentsAdmin\Index.cshtml.g.cs
