@@ -25,10 +25,12 @@ namespace Holidayaro.Controllers
         }
 
         // GET: MyReservations
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string token = "")
         {
-            var applicationDbContext = _context.Reservation.Include(r => r.Hotel);
-            return View(await applicationDbContext.ToListAsync());
+            var reservations = await _context.Reservation.Include(r => r.Hotel).ToListAsync();
+            var myReservations = reservations.FindAll(r => r.UserToken == token);
+            ViewBag.MyReservations = myReservations;
+            return View();
         }
 
         // GET: MyReservations/Details/5
@@ -50,82 +52,6 @@ namespace Holidayaro.Controllers
             return View(reservation);
         }
 
-        // GET: MyReservations/Create
-        public IActionResult Create()
-        {
-            ViewData["HotelId"] = new SelectList(_context.Hotel, "HotelId", "Board");
-            return View();
-        }
-
-        // POST: MyReservations/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReservationId,UserToken,HotelId,Date,Name,Surname,Email,Phone,DateOfBirth")] Reservation reservation)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(reservation);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["HotelId"] = new SelectList(_context.Hotel, "HotelId", "Board", reservation.HotelId);
-            return View(reservation);
-        }
-
-        // GET: MyReservations/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var reservation = await _context.Reservation.FindAsync(id);
-            if (reservation == null)
-            {
-                return NotFound();
-            }
-            ViewData["HotelId"] = new SelectList(_context.Hotel, "HotelId", "Board", reservation.HotelId);
-            return View(reservation);
-        }
-
-        // POST: MyReservations/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ReservationId,UserToken,HotelId,Date,Name,Surname,Email,Phone,DateOfBirth")] Reservation reservation)
-        {
-            if (id != reservation.ReservationId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(reservation);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReservationExists(reservation.ReservationId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["HotelId"] = new SelectList(_context.Hotel, "HotelId", "Board", reservation.HotelId);
-            return View(reservation);
-        }
 
         // GET: MyReservations/Delete/5
         public async Task<IActionResult> Delete(int? id)

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Holidayaro.Models.Reservation>
+﻿
 
 @{
     ViewData["Title"] = "Index";
@@ -14,61 +14,60 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserToken)
+                UserToken
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hotel)
+                Hotel
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                Date
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Surname)
+                Surname
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                Phone
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
+                DateOfBirth
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in ViewBag.MyReservations) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.UserToken)
+                @item.UserToken
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Hotel.Board)
+                @item.Hotel.Name
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                @item.Date
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @item.Name
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Surname)
+                @item.Surname
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @item.Email
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Phone)
+                @item.Phone
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
+                @item.DateOfBirth
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ReservationId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ReservationId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ReservationId">Delete</a>
             </td>
