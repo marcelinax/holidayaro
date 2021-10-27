@@ -1,11 +1,13 @@
-﻿@model IEnumerable<Holidayaro.Models.Hotel>
+﻿
 
 @{
     ViewData["Title"] = "Hotels";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
+<script>
+    var totalItems = @ViewBag.Results.amount;
+</script>
 
 <h5>Hotels</h5>
 <div class="table-box d-flex flex-column">
@@ -14,13 +16,18 @@
         <div  class="table-box-top-options d-flex align-items-end">
             <div class="row mr-5 align-items-end">
                 <label class="mb-0 mr-2">Show items</label>
-                <select></select>
+                <select id="show-items-select">
+                    <option value="@ViewBag.Results.amount">All</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
             </div>
             <div class="row align-items-end">
-                <label class="mb-0">Showing 1-10 of 140</label>
+                <label class="mb-0" id="items-amount-heading"></label>
                 <div class="btns-box d-flex ml-3">
-                    <button class="btn"><i class='bx bx-chevron-left'></i></button>
-                    <button  class="btn"><i class='bx bx-chevron-right'></i></button>
+                    <button class="btn" id="previous-page-btn"><i class='bx bx-chevron-left'></i></button>
+                    <button  class="btn" id="next-page-btn"><i class='bx bx-chevron-right'></i></button>
                 </div>
             </div>
         </div>
@@ -29,69 +36,69 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                   Name
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Country)
+                   Country
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Price)  $
+                  Price $
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Rating)
+                    Rating
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Days)
+                    Days
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Room)
+                    Room
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Board)
+                   Board
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.HotelDescriptions).Substring(0, 5) @Html.DisplayNameFor(model => model.HotelDescriptions).Substring(5)
+                    Hotel Descriptions
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.HotelAttractions).Substring(0, 5) @Html.DisplayNameFor(model => model.HotelAttractions).Substring(5)
+                    Hotel Attractions
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PhotosUrls).Substring(0, 6) @Html.DisplayNameFor(model => model.PhotosUrls).Substring(6)
+                    Photos Urls
                 </th>
 
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in ViewBag.Results.results)
             {
                 <tr>
                     <td>
-                        <div> @Html.DisplayFor(modelItem => item.Name)</div>
+                        <div> @item.Name</div>
                     </td>
                     <td>
-                        <div> @Html.DisplayFor(modelItem => item.Country)</div>
+                        <div> @item.Country</div>
                     </td>
                     <td>
-                        <div>  @Html.DisplayFor(modelItem => item.Price)</div>
+                        <div>  @item.Price</div>
                     </td>
                     <td>
-                        <div> @Html.DisplayFor(modelItem => item.Rating)</div>
+                        <div> @item.Rating</div>
                     </td>
                     <td>
-                        <div>@Html.DisplayFor(modelItem => item.Days)</div>
+                        <div>@item.Days</div>
                     </td>
                     <td>
-                        <div>@Html.DisplayFor(modelItem => item.Room)</div>
+                        <div>@item.Room</div>
                     </td>
                     <td>
-                        <div>@Html.DisplayFor(modelItem => item.Board)</div>
+                        <div>@item.Board</div>
                     </td>
                     <td>
                         <div>
                             @foreach (var element in item.HotelDescriptions)
                             {
-                                <p>@Html.DisplayFor(m => element.Name)</p>
+                            <p>@element.Name</p>
                             }
                         </div>
 
@@ -101,7 +108,7 @@
                         <div>
                             @foreach (var element in item.HotelAttractions)
                             {
-                                <p>@Html.DisplayFor(m => element.Name)</p>
+                                <p>@element.Name</p>
                             }
                         </div>
 
@@ -110,7 +117,7 @@
                         <div>
                             @foreach (var element in item.PhotosUrls)
                             {
-                                <p>@Html.DisplayFor(m => element.PhotoUrl)</p>
+                                <p>@element.PhotoUrl</p>
                             }
                         </div>
 

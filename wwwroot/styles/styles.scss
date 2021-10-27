@@ -41,63 +41,55 @@
         &-nav {
             &:nth-child(2) {
                 .nav-item {
-                    &:last-child {
-                        &:hover {
-                            &::after {
-                                left: 45%;
-                            }
-                        }
 
-
-                        .nav-link {
-                            margin-right: 0;
-                        }
+                    .nav-link {
+                        margin-right: 0;
                     }
+                }
+            }
+        }
+
+
+
+        .nav-item {
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+
+            &.active {
+                border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+                position: relative;
+
+                &::after {
+                    content: '';
+                    width: 30%;
+                    background-color: white;
+                    height: 4px;
+                    position: absolute;
+                    bottom: -2px;
+                    left: calc(50% - 1rem);
+                    transform: translateX(-50%);
+                }
+            }
+
+            &:hover {
+                &::after {
+                    content: '';
+                    width: 30%;
+                    background-color: white;
+                    height: 4px;
+                    position: absolute;
+                    bottom: -2px;
+                    left: calc(50% - 1rem);
+                    transform: translateX(-50%)
                 }
             }
 
 
-
-            .nav-item {
-                border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-                position: relative;
-
-                &.active {
-                    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-                    position: relative;
-
-                    &::after {
-                        content: '';
-                        width: 30%;
-                        background-color: white;
-                        height: 4px;
-                        position: absolute;
-                        bottom: -2px;
-                        left: 30%;
-                        transform: translateX(-30%);
-                    }
-                }
-
-                &:hover {
-                    &::after {
-                        content: '';
-                        width: 30%;
-                        background-color: white;
-                        height: 4px;
-                        position: absolute;
-                        bottom: -2px;
-                        left: 30%;
-                        transform: translateX(-30%)
-                    }
-                }
-
-
-                .nav-link {
-                    color: white;
-                    text-transform: uppercase;
-                    font-weight: 500;
-                    margin-right: 2rem;
-                }
+            .nav-link {
+                color: white;
+                text-transform: uppercase;
+                font-weight: 500;
+                margin-right: 2rem;
             }
         }
     }
@@ -234,6 +226,9 @@
     background-color: #42425C;
     width: 250px;
     height: 100vh;
+    position: fixed;
+    top:0;
+    left:0;
 
     &-link-item {
         padding: 10px 0;
@@ -271,8 +266,11 @@
 .admin-layout {
     height: 100vh;
 
-    main {
-        height: 100%;
+    .container-fluid {
+        padding-left: 265px;
+       
+    }
+
 
         .bg-img {
             width: 50%;
@@ -292,7 +290,7 @@
         h5 {
             color: #42425B;
         }
-    }
+  
 }
 
 .table-box {
@@ -337,8 +335,8 @@
 
         select {
             border: 2px solid #A6A5B3;
-            height: 10px;
-            padding: 9px 12px;
+            padding: 2px 12px;
+            font-size: 11px;
             color: #A6A5B3;
             outline: none;
         }
@@ -380,7 +378,8 @@
                         text-decoration: none;
                         color: #ACACB8;
                         transition: .2s all;
-                        &:hover{
+
+                        &:hover {
                             font-weight: 500;
                         }
                     }
@@ -457,6 +456,7 @@
 
                 th {
                     border-top: 0;
+                    white-space: nowrap;
                 }
             }
         }
@@ -832,7 +832,7 @@ a {
 
                 &-images {
                     display: flex;
-                    width: calc(100% - 100px );
+                    width: calc(100% - 100px);
 
                     .current-offer-top-box-gallery-item {
                         width: 120px;

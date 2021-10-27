@@ -6,4 +6,8 @@ if (location.pathname == '/Hotels') {
 if (location.pathname === '/ReservationsAdmin') {
     sidebarLinks[2].classList.add('active');
 }
+if (location.pathname === '/PaymentsAdmin') {
+    sidebarLinks[3].classList.add('active');
+}
+
 

@@ -7,41 +7,31 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Holidayaro.Data;
 using Holidayaro.Models;
-using Microsoft.AspNetCore.Authorization;
-using System.Dynamic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+
+
 
 namespace Holidayaro.Controllers
+
 {
-   [Authorize]
-    public class ReservationsAdminController : Controller
+    public class MyReservationsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ReservationsAdminController(ApplicationDbContext context)
+        public MyReservationsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: ReservationsAdmin
-        public async Task<IActionResult> Index(int pageSize, int startIndex = -1)
+        // GET: MyReservations
+        public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Reservation.Include(r => r.Hotel);
-
-            dynamic results = new ExpandoObject();
-            results.results = (await applicationDbContext.ToListAsync()).Skip(startIndex).Take(pageSize);
-            results.amount = (await applicationDbContext.ToListAsync()).Count();
-            if (startIndex == -1)
-            {
-                results.results = await applicationDbContext.ToListAsync();
-            }
-
-            ViewBag.Results = results;
-
-
-            return View();
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: ReservationsAdmin/Details/5
+        // GET: MyReservations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -60,7 +50,31 @@ namespace Holidayaro.Controllers
             return View(reservation);
         }
 
-        // GET: ReservationsAdmin/Edit/5
+        // GET: MyReservations/Create
+        public IActionResult Create()
+        {
+            ViewData["HotelId"] = new SelectList(_context.Hotel, "HotelId", "Board");
+            return View();
+        }
+
+        // POST: MyReservations/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ReservationId,UserToken,HotelId,Date,Name,Surname,Email,Phone,DateOfBirth")] Reservation reservation)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(reservation);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["HotelId"] = new SelectList(_context.Hotel, "HotelId", "Board", reservation.HotelId);
+            return View(reservation);
+        }
+
+        // GET: MyReservations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,7 +91,7 @@ namespace Holidayaro.Controllers
             return View(reservation);
         }
 
-        // POST: ReservationsAdmin/Edit/5
+        // POST: MyReservations/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -113,7 +127,7 @@ namespace Holidayaro.Controllers
             return View(reservation);
         }
 
-        // GET: ReservationsAdmin/Delete/5
+        // GET: MyReservations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,7 +146,7 @@ namespace Holidayaro.Controllers
             return View(reservation);
         }
 
-        // POST: ReservationsAdmin/Delete/5
+        // POST: MyReservations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

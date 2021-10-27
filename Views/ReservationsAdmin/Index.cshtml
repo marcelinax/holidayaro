@@ -1,11 +1,13 @@
-﻿@model IEnumerable<Holidayaro.Models.Reservation>
-
-@{
+﻿@{
     ViewData["Title"] = "Reservations";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h5>Reservations</h5>
+
+<script>
+    var totalItems = @ViewBag.Results.amount;
+</script>
 
 
 <div class="table-box d-flex flex-column">
@@ -13,13 +15,18 @@
         <div class="table-box-top-options d-flex align-items-end">
             <div class="row mr-5 align-items-end">
                 <label class="mb-0 mr-2">Show items</label>
-                <select></select>
+                <select id="show-items-select" >
+                    <option value="@ViewBag.Results.amount">All</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
             </div>
             <div class="row align-items-end">
-                <label class="mb-0">Showing 1-10 of 140</label>
+                <label class="mb-0" id="items-amount-heading"></label>
                 <div class="btns-box d-flex ml-3">
-                    <button class="btn"><i class='bx bx-chevron-left'></i></button>
-                    <button class="btn"><i class='bx bx-chevron-right'></i></button>
+                    <button class="btn" id="previous-page-btn"><i class='bx bx-chevron-left'></i></button>
+                    <button class="btn" id="next-page-btn"><i class='bx bx-chevron-right'></i></button>
                 </div>
             </div>
         </div>
@@ -28,69 +35,70 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.ReservationId)
+                    ReservationId
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.UserToken)
+                    UserToken
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.HotelId)  
+                    HotelId
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Hotel.Name)
+                    Hotel Name
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Date)
+                    Date
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    Name
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Surname)
+                    Surname
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Email)
+                    Email
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Phone)
+                    Phone
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                    DateOfBirth
                 </th>
 
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            
+            @foreach (var item in ViewBag.Results.results)
             {
             <tr>
                 <td>
-                    <div> @Html.DisplayFor(modelItem => item.ReservationId)</div>
+                    <div>@item.ReservationId</div>
                 </td>
                 <td>
-                    <div> @Html.DisplayFor(modelItem => item.UserToken)</div>
+                    <div>@item.UserToken</div>
                 </td>
                 <td>
-                    <div>  @Html.DisplayFor(modelItem => item.HotelId)</div>
+                    <div>@item.HotelId</div>
                 </td>
                 <td>
-                    <div> @Html.DisplayFor(modelItem => item.Hotel.Name)</div>
+                    <div>@item.Hotel.Name</div>
                 </td>
                 <td>
-                    <div> @Html.DisplayFor(modelItem => item.Date)</div>
+                    <div>@item.Date</div>
                 </td>
                 <td>
-                    <div>@Html.DisplayFor(modelItem => item.Name)</div>
+                    <div>@item.Name</div>
                 </td>
                 <td>
-                    <div>@Html.DisplayFor(modelItem => item.Surname)</div>
+                    <div>@item.Surname</div>
                 </td>
                 <td>
-                    <div>@Html.DisplayFor(modelItem => item.Email)</div>
+                    <div>@item.Email</div>
                 </td>
                 <td>
-                    <div>@Html.DisplayFor(modelItem => item.Phone)</div>
+                    <div>@item.Phone</div>
                 </td>
                 <td>
                     <div>@Html.Raw(item.DateOfBirth.ToString().Split(' ')[0])</div>
@@ -100,9 +108,6 @@
 
                 <td>
                     <div>
-                        <a asp-action="Edit" asp-route-id="@item.ReservationId">
-                            <i class='bx bx-edit'></i>
-                        </a>
                         <a asp-action="Delete" asp-route-id="@item.ReservationId">
                             <i class='bx bx-trash-alt'></i>
                         </a>
@@ -115,69 +120,3 @@
     </table>
 </div>
 
-@*<table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserToken)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Hotel)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Surname)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Phone)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateOfBirth)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-    @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserToken)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Hotel.Board)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Surname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateOfBirth)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ReservationId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ReservationId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ReservationId">Delete</a>
-                </td>
-            </tr>
-    }
-        </tbody>
-    </table>*@

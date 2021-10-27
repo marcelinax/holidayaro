@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Holidayaro.Data;
 using Holidayaro.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Dynamic;
 
 namespace Holidayaro.Controllers
 {
@@ -22,10 +23,21 @@ namespace Holidayaro.Controllers
         }
 
         // GET: PaymentsAdmin
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageSize, int startIndex = -1)
         {
             var applicationDbContext = _context.Payment.Include(p => p.Reservation);
-            return View(await applicationDbContext.ToListAsync());
+            dynamic results = new ExpandoObject();
+            results.results = (await applicationDbContext.ToListAsync()).Skip(startIndex).Take(pageSize);
+            results.amount = (await applicationDbContext.ToListAsync()).Count();
+            if (startIndex == -1)
+            {
+                results.results = await applicationDbContext.ToListAsync();
+            }
+
+            ViewBag.Results = results;
+
+
+            return View();
         }
 
         // GET: PaymentsAdmin/Details/5
