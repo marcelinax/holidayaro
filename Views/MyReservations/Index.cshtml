@@ -1,77 +1,142 @@
 ﻿
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "My reservations";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var index = 0;
+    
 }
+<div class="payment-modal-bg">
+    <div class="payment-modal">
+        <h4>Payment</h4>
+        <hr class="purple" />
+        <div class="row justify-content-between">
+            <div class="payment-modal-card" id="card-payment">
+                <div class="payment-modal-card-bg" style="background-image: url('/assets/Group 3.png')"></div>
+            </div>
+            <div class="payment-modal-card disactive" id="paypal-payment">
+                <div class="payment-modal-card-bg" style="background-image: url(https://cdn.freebiesupply.com/logos/large/2x/paypal-logo-png-transparent.png)"></div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-7">
+                <div class="payment-modal-form-group ">
+                    <label>Card number</label>
+                    <input type="text" id="card-number-input" class="text-center" />
+                    <span id="card-number-error"></span>
+                </div>
+                <div class="payment-modal-form-group">
+                    <label>Card holder name</label>
+                    <input type="text" id="card-holder-name-input" />
+                    <span id="card-holder-name-error"></span>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="payment-modal-form-group">
 
-<h1>Index</h1>
+                            <label>Expiration date</label>
+                            <div class="row">
+                                <select id="month-select"></select>
+                                <select id="year-select"></select>
+                            </div>
+                            <span id="expiration-date-error"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="payment-modal-form-group">
+                            <label>CVV</label>
+                            <input type="text" id="ccv-input" />
+                            <span id="cvv-error"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="payment-modal-form-group">
+                    <label>Email</label>
+                    <input type="text" id="paypal-email-input" />
+                    <span id="paypal-email-error"></span>
+                </div>
+            </div>
+        </div>
+        <hr class="mt-5" />
+        <div class="row justify-content-end align-items-center">
+            <p>Your total is </p>
+            <button class="btn" id="make-payment-btn">PAY</button>
+        </div>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                UserToken
-            </th>
-            <th>
-                Hotel
-            </th>
-            <th>
-                Date
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Surname
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Phone
-            </th>
-            <th>
-                DateOfBirth
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in ViewBag.MyReservations) {
-        <tr>
-            <td>
-                @item.UserToken
-            </td>
-            <td>
-                @item.Hotel.Name
-            </td>
-            <td>
-                @item.Date
-            </td>
-            <td>
-                @item.Name
-            </td>
-            <td>
-                @item.Surname
-            </td>
-            <td>
-                @item.Email
-            </td>
-            <td>
-                @item.Phone
-            </td>
-            <td>
-                @item.DateOfBirth
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.ReservationId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ReservationId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+</div>
+
+<div class="my-reservations-list d-flex w-50 m-auto flex-column">
+    @foreach (var item in ViewBag.MyReservations)
+    {
+        var photosIndex = 0;
+    <div class="my-reservations-list-item d-flex">
+        <div class="row w-100">
+            <div class="col-5">
+                @foreach (var photo in item.Hotel.PhotosUrls)
+                {
+
+                    @if (photosIndex == 0)
+                    {
+                        <div class="my-reservations-list-item-img" style="background-image: url(@photo.PhotoUrl)"></div>
+                    }
+
+                    photosIndex++;
+                }
+            </div>
+            <div class="col-7">
+                <div class="row h-100">
+                    <div class="my-reservations-list-item-left col-7 d-flex flex-column justify-content-between p-0">
+                        <div class="my-reservations-list-item-left-top">
+                            <h6>@item.Hotel.Name</h6>
+                            <p>@item.Hotel.Country</p>
+                        </div>
+                        <div class="my-reservations-list-item-left-main">
+                            <div class="my-reservations-list-item-left-main-group">
+                                <label>Date:</label>
+                                <p>@item.Date</p>
+                            </div>
+                            <div class="my-reservations-list-item-left-main-group">
+                                <label>Status:</label>
+                                <p style="color: @(ViewBag.MyStatuses[index]? "#4B8FF7": "#FD9A09")">@(ViewBag.MyStatuses[index]? @Html.Raw("Paid") : @Html.Raw("Unpaid"))</p>
+                            </div>
+                        </div>
+                        <div class="my-reservations-list-item-left-bottom pb-2">
+                            <div class="row mx-0">
+                                <div class="my-reservations-list-item-left-bottom-group">
+                                    <i class='bx bxs-star'></i>
+                                    <p class="mb-0">@(item.Hotel.Rating/2 + 1) stars</p>
+                                </div>
+                                <div class="my-reservations-list-item-left-bottom-group">
+                                    <i class='bx bx-time-five'></i>
+                                    <p class="mb-0">@item.Hotel.Days days</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-reservations-list-item-right col-5 d-flex flex-column justify-content-between align-items-end">
+                        <div class="my-reservations-list-item-right-top">
+                            <p>$@item.Hotel.Price</p>
+                        </div>
+                        <div class="my-reservations-list-item-right-bottom">
+                            <div class="row">
+                                <a class="btn" asp-action="Delete" asp-route-id="@item.ReservationId">Cancel</a>
+                                @(ViewBag.MyStatuses[index]? @Html.Raw("<span></span>") : @Html.Raw("<button class='btn' id='pay-now-btn' onclick='showPaymentModal("+item.ReservationId + "," + item.Hotel.Price + ")'>Pay Now</button>")) 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+               
+                </div>
+            </div>
+    </div>
+              
+
+        index++;
+    }
+</div>
+

@@ -1518,7 +1518,123 @@ a {
 }
 
 
+
+.my-reservations-list {
+
+    &-item {
+        width: 100%;
+        min-height: 300px;
+        max-height: 300px;
+        box-shadow: 0 0 15px rgba(#000,.2);
+        background-color: white;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 20px;
+
+        .col-5 {
+            height: 100%;
+        }
+
+        .col-7 {
+            padding: 2rem 1.5rem;
+        }
+
+        &-img {
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        &-left {
+            &-top {
+                h6 {
+                    color: #3a3a3a;
+                    font-weight: 600;
+                    font-size: 18px;
+                }
+
+                p {
+                    color: #9c9fa4;
+                    font-weight: 500;
+                    font-size: 14px;
+                }
+            }
+
+            &-main-group {
+                display: flex;
+
+                label, p {
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                label {
+                    margin-right: 10px;
+                    color: #9c9fa4;
+                }
+
+                p {
+                    font-weight: 600;
+                }
+            }
+
+            &-bottom-group {
+                display: flex;
+                align-items: center;
+
+                &:first-child {
+                    margin-right: 20px;
+                }
+
+                i {
+                    font-size: 1.2rem;
+                    margin-right: 5px;
+                }
+
+                i, p {
+                    color: #9c9fa4;
+                }
+
+                p {
+                    font-weight: 500;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        &-right {
+            &-top {
+                p {
+                    font-size: 1.5rem;
+                    color: #4b8ff7;
+                    font-weight: 500;
+                }
+            }
+
+            &-bottom {
+                .btn {
+                    color: white;
+                    background-color: #4B8FF7;
+                    transition: .2s all;
+
+                    &:last-child {
+                        background-color: #FD9A09;
+                        margin-left: 15px;
+                    }
+
+                    &:hover {
+                        transform: scale(0.9);
+                    }
+                }
+            }
+        }
+    }
+}
+
 input[disabled], select[disabled]{
     opacity: 0.5;
     background-color: #CCCCCC !important;
 }
+

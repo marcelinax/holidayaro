@@ -27,9 +27,17 @@ namespace Holidayaro.Controllers
         // GET: MyReservations
         public async Task<IActionResult> Index(string token = "")
         {
-            var reservations = await _context.Reservation.Include(r => r.Hotel).ToListAsync();
+            var reservations = await _context.Reservation.Include(r => r.Hotel).Include(r => r.Hotel.PhotosUrls).ToListAsync();
             var myReservations = reservations.FindAll(r => r.UserToken == token);
+            var payments =await _context.Payment.ToListAsync();
+            var myPayments = payments.FindAll(p => myReservations.FindAll(r => r.ReservationId == p.ReservationId).Count > 0);
+            List<Boolean> myStatuses = new List<Boolean>();
+            foreach (var reservation in myReservations) {
+                var status = payments.FindAll(p => p.ReservationId == reservation.ReservationId).Count > 0;
+                myStatuses.Add(status);
+            }
             ViewBag.MyReservations = myReservations;
+            ViewBag.MyStatuses = myStatuses;
             return View();
         }
 
