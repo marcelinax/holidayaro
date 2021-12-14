@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Holidayaro.Data;
 using Holidayaro.Models;
-
+using Holidayaro.Repositories;
 
 namespace Holidayaro.Controllers
 {
@@ -15,95 +15,58 @@ namespace Holidayaro.Controllers
     [ApiController]
     public class ReservationsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IRepository<Reservation> _reservationRepository;
 
-        public ReservationsController(ApplicationDbContext context)
+        public ReservationsController(IRepository<Reservation> reservationRepository)
         {
-            _context = context;
+            _reservationRepository = reservationRepository;
         }
 
         // GET: api/Reservations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Reservation>>> GetReservation()
+        public  IList<Reservation> GetReservation()
         {
-            return await _context.Reservation.ToListAsync();
+            return _reservationRepository.FindAll();
         }
 
         // GET: api/Reservations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Reservation>> GetReservation(int id)
+        public Reservation GetReservation(int id)
         {
-            var reservation = await _context.Reservation.FindAsync(id);
-
-            if (reservation == null)
-            {
-                return NotFound();
-            }
-
-            return reservation;
+            return _reservationRepository.Find(id);
         }
 
         // PUT: api/Reservations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReservation(int id, Reservation reservation)
+        public IActionResult PutReservation(int id, Reservation reservation)
         {
-            if (id != reservation.ReservationId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(reservation).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReservationExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _reservationRepository.Update(reservation);
             return NoContent();
         }
 
         // POST: api/Reservations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Reservation>> PostReservation(Reservation reservation)
+        public ActionResult<Reservation> PostReservation(Reservation reservation)
         {
-            _context.Reservation.Add(reservation);
-            await _context.SaveChangesAsync();
+            Reservation r = _reservationRepository.Add(reservation);
 
-            return CreatedAtAction("GetReservation", new { id = reservation.ReservationId }, reservation);
+            return CreatedAtAction("GetReservation", new { id = r.ReservationId }, r);
         }
 
         // DELETE: api/Reservations/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReservation(int id)
+        public IActionResult DeleteReservation(int id)
         {
-            var reservation = await _context.Reservation.FindAsync(id);
-            if (reservation == null)
-            {
-                return NotFound();
-            }
 
-            _context.Reservation.Remove(reservation);
-            await _context.SaveChangesAsync();
-
+            _reservationRepository.Delete(id);
             return NoContent();
         }
 
         private bool ReservationExists(int id)
         {
-            return _context.Reservation.Any(e => e.ReservationId == id);
+            return _reservationRepository.Exists(id);
         }
     }
 }

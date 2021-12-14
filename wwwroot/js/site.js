@@ -23,9 +23,13 @@ if (location.pathname === '/') {
     navItems[0].classList.add('active');
 }
 if (location.pathname === '/MyReservations') {
-    navItems[1].classList.add('active');
+    navItems[2].classList.add('active');
     if (!location.search)
         location.search = `?token=${userToken}`;
+}
+if (location.pathname === '/Home/Privacy') {
+    navItems[1].classList.add('active');
+    
 }
 
 

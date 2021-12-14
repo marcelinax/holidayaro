@@ -170,12 +170,10 @@ const filteredHotels = () => {
     if (filteredCountries.length > 0) {
         filtered = filtered.filter(h => filteredCountries.includes(h.country));
     }
-    if (minDaysFilter.value) {
-        filtered = filtered.filter(h => h.days >= minDaysFilter.value );
+    if (minDaysFilter.value && maxDaysFilter.value) {
+        filtered = filtered.filter(h => (h.days >= minDaysFilter.value && h.days <= maxDaysFilter.value))
     }
-    if (maxDaysFilter.value) {
-        filtered = filtered.filter(h => h.days <= minDaysFilter.value );
-    }
+   
     filteredResults.innerHTML = `Found ${filtered.length}`;
     return filtered;
 }
@@ -205,4 +203,5 @@ renderSelectOptions();
 renderStarsFilterBoxButtons();
 priceFilter.addEventListener('change', () => drawHotels());
 minDaysFilter.addEventListener('change', () => drawHotels());
+maxDaysFilter.addEventListener('change', () => drawHotels());
 resetFilters();

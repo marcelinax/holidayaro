@@ -198,7 +198,7 @@ const checkReservationValidation = () => {
     let isValid = true;
     clearValidation();
 
-    const phoneRegex = /^\d{10}$/;
+    const phoneRegex = /^\d{9}$/;
     const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
     if (nameInput.value === '') {
@@ -213,7 +213,7 @@ const checkReservationValidation = () => {
         document.getElementById('email-error').innerHTML = "The Email field is required.";
         isValid = false;
     }
-    if (!emailRegex(emailInput.value)) {
+    if (!emailRegex.test(emailInput.value)) {
         document.getElementById('email-error').innerHTML = "Invalid Email.";
         isValid = false;
     }

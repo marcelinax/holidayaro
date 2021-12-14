@@ -36,6 +36,11 @@
             color: white;
             font-size: 30px;
             font-weight: 600;
+            transition: .2s all;
+            &:hover{
+                color:white;
+                transform: scale(1.1)
+            }
         }
 
         &-nav {
