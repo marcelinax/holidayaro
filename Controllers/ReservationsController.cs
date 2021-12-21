@@ -15,58 +15,51 @@ namespace Holidayaro.Controllers
     [ApiController]
     public class ReservationsController : ControllerBase
     {
-        private readonly IRepository<Reservation> _reservationRepository;
+        private readonly IReservationsRepository _reservationRepository;
 
-        public ReservationsController(IRepository<Reservation> reservationRepository)
+        public ReservationsController(IReservationsRepository reservationRepository)
         {
             _reservationRepository = reservationRepository;
         }
 
-        // GET: api/Reservations
         [HttpGet]
         public  IList<Reservation> GetReservation()
         {
             return _reservationRepository.FindAll();
         }
 
-        // GET: api/Reservations/5
         [HttpGet("{id}")]
         public Reservation GetReservation(int id)
         {
-            return _reservationRepository.Find(id);
+            return _reservationRepository.FindOneById(id);
         }
 
-        // PUT: api/Reservations/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public IActionResult PutReservation(int id, Reservation reservation)
         {
-            _reservationRepository.Update(reservation);
+            _reservationRepository.UpdateOne(reservation);
             return NoContent();
         }
 
-        // POST: api/Reservations
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public ActionResult<Reservation> PostReservation(Reservation reservation)
         {
-            Reservation r = _reservationRepository.Add(reservation);
+            Reservation r = _reservationRepository.AddNew(reservation);
 
             return CreatedAtAction("GetReservation", new { id = r.ReservationId }, r);
         }
 
-        // DELETE: api/Reservations/5
         [HttpDelete("{id}")]
         public IActionResult DeleteReservation(int id)
         {
 
-            _reservationRepository.Delete(id);
+            _reservationRepository.DeleteOneById(id);
             return NoContent();
         }
 
         private bool ReservationExists(int id)
         {
-            return _reservationRepository.Exists(id);
+            return _reservationRepository.CheckIfExistsById(id);
         }
     }
 }

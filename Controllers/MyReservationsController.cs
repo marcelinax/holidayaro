@@ -9,49 +9,38 @@ using Holidayaro.Data;
 using Holidayaro.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-
-
+using Holidayaro.Repositories;
 
 namespace Holidayaro.Controllers
 
 {
     public class MyReservationsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IReservationsRepository _reservationsRepository;
 
-        public MyReservationsController(ApplicationDbContext context)
+        public MyReservationsController(IReservationsRepository reservationsRepository)
         {
-            _context = context;
+            _reservationsRepository = reservationsRepository;
         }
 
-        // GET: MyReservations
-        public async Task<IActionResult> Index(string token = "")
+        public IActionResult Index(string token = "")
         {
-            var reservations = await _context.Reservation.Include(r => r.Hotel).Include(r => r.Hotel.PhotosUrls).ToListAsync();
-            var myReservations = reservations.FindAll(r => r.UserToken == token);
-            var payments =await _context.Payment.ToListAsync();
-            var myPayments = payments.FindAll(p => myReservations.FindAll(r => r.ReservationId == p.ReservationId).Count > 0);
-            List<Boolean> myStatuses = new List<Boolean>();
-            foreach (var reservation in myReservations) {
-                var status = payments.FindAll(p => p.ReservationId == reservation.ReservationId).Count > 0;
-                myStatuses.Add(status);
-            }
+
+            var myReservations = _reservationsRepository.GetReservationsByToken(token);
+            var myStatuses = _reservationsRepository.GetStatuesByToken(token, myReservations);
             ViewBag.MyReservations = myReservations;
             ViewBag.MyStatuses = myStatuses;
             return View();
         }
 
-        // GET: MyReservations/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reservation = await _context.Reservation
-                .Include(r => r.Hotel)
-                .FirstOrDefaultAsync(m => m.ReservationId == id);
+            var reservation = _reservationsRepository.FindOneById((int)id);
             if (reservation == null)
             {
                 return NotFound();
@@ -61,17 +50,14 @@ namespace Holidayaro.Controllers
         }
 
 
-        // GET: MyReservations/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reservation = await _context.Reservation
-                .Include(r => r.Hotel)
-                .FirstOrDefaultAsync(m => m.ReservationId == id);
+            var reservation =  _reservationsRepository.FindOneById((int)id);
             if (reservation == null)
             {
                 return NotFound();
@@ -80,20 +66,17 @@ namespace Holidayaro.Controllers
             return View(reservation);
         }
 
-        // POST: MyReservations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reservation = await _context.Reservation.FindAsync(id);
-            _context.Reservation.Remove(reservation);
-            await _context.SaveChangesAsync();
+            _reservationsRepository.DeleteOneById(id);
             return RedirectToAction(nameof(Index));
         }
 
         private bool ReservationExists(int id)
         {
-            return _context.Reservation.Any(e => e.ReservationId == id);
+            return _reservationsRepository.CheckIfExistsById(id);
         }
     }
 }

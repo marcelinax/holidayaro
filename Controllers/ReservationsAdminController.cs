@@ -22,7 +22,6 @@ namespace Holidayaro.Controllers
             _context = context;
         }
 
-        // GET: ReservationsAdmin
         public async Task<IActionResult> Index(int pageSize, int startIndex = -1)
         {
             var applicationDbContext = _context.Reservation.Include(r => r.Hotel);
@@ -40,8 +39,6 @@ namespace Holidayaro.Controllers
 
             return View();
         }
-
-        // GET: ReservationsAdmin/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -59,8 +56,6 @@ namespace Holidayaro.Controllers
 
             return View(reservation);
         }
-
-        // GET: ReservationsAdmin/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,9 +72,6 @@ namespace Holidayaro.Controllers
             return View(reservation);
         }
 
-        // POST: ReservationsAdmin/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ReservationId,UserToken,HotelId,Date,Name,Surname,Email,Phone,DateOfBirth")] Reservation reservation)
@@ -113,7 +105,6 @@ namespace Holidayaro.Controllers
             return View(reservation);
         }
 
-        // GET: ReservationsAdmin/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,7 +123,6 @@ namespace Holidayaro.Controllers
             return View(reservation);
         }
 
-        // POST: ReservationsAdmin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

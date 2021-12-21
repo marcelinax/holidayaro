@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Holidayaro.Data;
 using Holidayaro.Models;
 using Microsoft.AspNetCore.Authorization;
+using Holidayaro.Repositories;
 
 namespace Holidayaro.Controllers
 {
@@ -16,98 +17,51 @@ namespace Holidayaro.Controllers
     
     public class HotelAttractionsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IRepository<HotelAttraction> _hotelAttractionsRepository;
 
-        public HotelAttractionsController(ApplicationDbContext context)
+        public HotelAttractionsController(IRepository<HotelAttraction> hotelAttractionsRepository)
         {
-            _context = context;
+            _hotelAttractionsRepository = hotelAttractionsRepository;
         }
 
-        // GET: api/HotelAttractions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HotelAttraction>>> GetHotelAttraction()
+        public IEnumerable<HotelAttraction> GetHotelAttraction()
         {
-            return await _context.HotelAttraction.ToListAsync();
+            return _hotelAttractionsRepository.FindAll();
         }
 
-        // GET: api/HotelAttractions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<HotelAttraction>> GetHotelAttraction(int id)
+        public  HotelAttraction GetHotelAttraction(int id)
         {
-            var hotelAttraction = await _context.HotelAttraction.FindAsync(id);
-
-            if (hotelAttraction == null)
-            {
-                return NotFound();
-            }
-
-            return hotelAttraction;
+            return _hotelAttractionsRepository.FindOneById(id);
         }
 
-        // PUT: api/HotelAttractions/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> PutHotelAttraction(int id, HotelAttraction hotelAttraction)
+        public IActionResult PutHotelAttraction(int id, HotelAttraction hotelAttraction)
         {
-            if (id != hotelAttraction.HotelAttractionId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(hotelAttraction).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelAttractionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _hotelAttractionsRepository.UpdateOne(hotelAttraction);
             return NoContent();
         }
 
-        // POST: api/HotelAttractions
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<HotelAttraction>> PostHotelAttraction(HotelAttraction hotelAttraction)
+        public ActionResult<HotelAttraction> PostHotelAttraction(HotelAttraction hotelAttraction)
         {
-            _context.HotelAttraction.Add(hotelAttraction);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetHotelAttraction", new { id = hotelAttraction.HotelAttractionId }, hotelAttraction);
+            HotelAttraction ha = _hotelAttractionsRepository.AddNew(hotelAttraction);
+            return CreatedAtAction("GetHotelAttraction", new { id = ha.HotelAttractionId }, ha);
         }
 
-        // DELETE: api/HotelAttractions/5
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> DeleteHotelAttraction(int id)
+        public HotelAttraction DeleteHotelAttraction(int id)
         {
-            var hotelAttraction = await _context.HotelAttraction.FindAsync(id);
-            if (hotelAttraction == null)
-            {
-                return NotFound();
-            }
-
-            _context.HotelAttraction.Remove(hotelAttraction);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return _hotelAttractionsRepository.DeleteOneById(id);
         }
 
         private bool HotelAttractionExists(int id)
         {
-            return _context.HotelAttraction.Any(e => e.HotelAttractionId == id);
+            return _hotelAttractionsRepository.CheckIfExistsById(id);
         }
     }
 }

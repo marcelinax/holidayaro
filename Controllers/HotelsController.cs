@@ -9,46 +9,33 @@ using Holidayaro.Data;
 using Holidayaro.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Dynamic;
+using Holidayaro.Repositories;
 
 namespace Holidayaro.Controllers
 {
     public class HotelsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IHotelsRepository _hotelRepository;
 
-        public HotelsController(ApplicationDbContext context)
+        public HotelsController(IHotelsRepository hotelRepository)
         {
-            _context = context;
+            _hotelRepository = hotelRepository;
         }
 
-        // GET: Hotels
         [Authorize]
         public async Task<IActionResult> Index(int pageSize, int startIndex = -1)
         {
-            var applicationDbContext = _context.Hotel.Include("HotelAttractions").Include("HotelDescriptions").Include("PhotosUrls");
-           dynamic results = new ExpandoObject();
-            results.results = (await applicationDbContext.ToListAsync()).Skip(startIndex).Take(pageSize);
-            results.amount = (await applicationDbContext.ToListAsync()).Count();
-            if (startIndex == -1)
-            {
-                results.results = await applicationDbContext.ToListAsync();
-            }
-
-            ViewBag.Results = results;
-
-
+            ViewBag.Results = _hotelRepository.GetManyByPageSizeAndOffset(pageSize, startIndex);
             return View();
         }
 
-        // GET: Hotels/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
-            }
-
-            var hotel = await _context.Hotel.Include("HotelAttractions").Include("HotelDescriptions").Include("PhotosUrls").FirstOrDefaultAsync(m => m.HotelId == id);
+            } 
+            var hotel = _hotelRepository.FindOneById((int)id);
             if (hotel == null)
             {
                 return NotFound();
@@ -57,40 +44,34 @@ namespace Holidayaro.Controllers
             return View(hotel);
         }
 
-        // GET: Hotels/Create
         [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Hotels/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("HotelId,Name,Country,Price,PhotoUrl,Rating,Days,Room,Board")] Hotel hotel)
+        public IActionResult Create([Bind("HotelId,Name,Country,Price,PhotoUrl,Rating,Days,Room,Board")] Hotel hotel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(hotel);
-                await _context.SaveChangesAsync();
+                _hotelRepository.AddNew(hotel);
                 return RedirectToAction(nameof(Index));
             }
             return View(hotel);
         }
 
-        // GET: Hotels/Edit/5
         [Authorize]
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var hotel = await _context.Hotel.FindAsync(id);
+            var hotel = _hotelRepository.FindOneById((int)id);
             if (hotel == null)
             {
                 return NotFound();
@@ -98,13 +79,10 @@ namespace Holidayaro.Controllers
             return View(hotel);
         }
 
-        // POST: Hotels/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("HotelId,Name,Country,Price,PhotoUrl,Rating,Days,Room,Board")] Hotel hotel)
+        public IActionResult Edit(int id, [Bind("HotelId,Name,Country,Price,PhotoUrl,Rating,Days,Room,Board")] Hotel hotel)
         {
             if (id != hotel.HotelId)
             {
@@ -115,8 +93,7 @@ namespace Holidayaro.Controllers
             {
                 try
                 {
-                    _context.Update(hotel);
-                    await _context.SaveChangesAsync();
+                    _hotelRepository.UpdateOne(hotel);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -134,17 +111,16 @@ namespace Holidayaro.Controllers
             return View(hotel);
         }
 
-        // GET: Hotels/Delete/5
         [Authorize]
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var hotel = await _context.Hotel
-                .FirstOrDefaultAsync(m => m.HotelId == id);
+            var hotel = _hotelRepository.FindOneById((int)id);
+
             if (hotel == null)
             {
                 return NotFound();
@@ -153,21 +129,18 @@ namespace Holidayaro.Controllers
             return View(hotel);
         }
 
-        // POST: Hotels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var hotel = await _context.Hotel.FindAsync(id);
-            _context.Hotel.Remove(hotel);
-            await _context.SaveChangesAsync();
+            _hotelRepository.DeleteOneById(id);
             return RedirectToAction(nameof(Index));
         }
 
         private bool HotelExists(int id)
         {
-            return _context.Hotel.Any(e => e.HotelId == id);
+            return _hotelRepository.CheckIfExistsById(id);
         }
     }
 }

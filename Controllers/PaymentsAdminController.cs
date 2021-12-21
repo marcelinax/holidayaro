@@ -9,48 +9,37 @@ using Holidayaro.Data;
 using Holidayaro.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Dynamic;
+using Holidayaro.Repositories;
 
 namespace Holidayaro.Controllers
 {
     [Authorize]
     public class PaymentsAdminController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IPaymentRepository _paymentRepository;
+        private readonly IReservationsRepository _reservationsRepository;
 
-        public PaymentsAdminController(ApplicationDbContext context)
+        public PaymentsAdminController(IPaymentRepository paymentRepository, IReservationsRepository reservationsRepository)
         {
-            _context = context;
+            _paymentRepository = paymentRepository;
+            _reservationsRepository = reservationsRepository;
         }
 
-        // GET: PaymentsAdmin
-        public async Task<IActionResult> Index(int pageSize, int startIndex = -1)
+        public IActionResult Index(int pageSize, int startIndex = -1)
         {
-            var applicationDbContext = _context.Payment.Include(p => p.Reservation);
-            dynamic results = new ExpandoObject();
-            results.results = (await applicationDbContext.ToListAsync()).Skip(startIndex).Take(pageSize);
-            results.amount = (await applicationDbContext.ToListAsync()).Count();
-            if (startIndex == -1)
-            {
-                results.results = await applicationDbContext.ToListAsync();
-            }
-
-            ViewBag.Results = results;
-
+            ViewBag.Results = _paymentRepository.GetManyByPageSizeAndOffset(pageSize, startIndex);
 
             return View();
         }
 
-        // GET: PaymentsAdmin/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var payment = await _context.Payment
-                .Include(p => p.Reservation)
-                .FirstOrDefaultAsync(m => m.PaymentId == id);
+            var payment = _paymentRepository.FindOneById((int)id);
             if (payment == null)
             {
                 return NotFound();
@@ -60,29 +49,25 @@ namespace Holidayaro.Controllers
         }
 
 
-        // GET: PaymentsAdmin/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var payment = await _context.Payment.FindAsync(id);
+            var payment = _paymentRepository.FindOneById((int)id);
             if (payment == null)
             {
                 return NotFound();
             }
-            ViewData["ReservationId"] = new SelectList(_context.Reservation, "ReservationId", "Email", payment.ReservationId);
+            ViewData["ReservationId"] = new SelectList(_reservationsRepository.FindAll(), "ReservationId", "Email", payment.ReservationId);
             return View(payment);
         }
 
-        // POST: PaymentsAdmin/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,ReservationId,CreditCardNumber,PaypalEmail,CreditCardHolderName,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardCvv,PaymentAmount")] Payment payment)
+        public IActionResult Edit(int id, [Bind("PaymentId,ReservationId,CreditCardNumber,PaypalEmail,CreditCardHolderName,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardCvv,PaymentAmount")] Payment payment)
         {
             if (id != payment.PaymentId)
             {
@@ -93,8 +78,7 @@ namespace Holidayaro.Controllers
             {
                 try
                 {
-                    _context.Update(payment);
-                    await _context.SaveChangesAsync();
+                    _paymentRepository.UpdateOne(payment);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -109,21 +93,18 @@ namespace Holidayaro.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReservationId"] = new SelectList(_context.Reservation, "ReservationId", "Email", payment.ReservationId);
+            ViewData["ReservationId"] = new SelectList(_reservationsRepository.FindAll(), "ReservationId", "Email", payment.ReservationId);
             return View(payment);
         }
 
-        // GET: PaymentsAdmin/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var payment = await _context.Payment
-                .Include(p => p.Reservation)
-                .FirstOrDefaultAsync(m => m.PaymentId == id);
+            var payment = _paymentRepository.FindOneById((int)id);
             if (payment == null)
             {
                 return NotFound();
@@ -132,20 +113,17 @@ namespace Holidayaro.Controllers
             return View(payment);
         }
 
-        // POST: PaymentsAdmin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var payment = await _context.Payment.FindAsync(id);
-            _context.Payment.Remove(payment);
-            await _context.SaveChangesAsync();
+            _paymentRepository.DeleteOneById(id);
             return RedirectToAction(nameof(Index));
         }
 
         private bool PaymentExists(int id)
         {
-            return _context.Payment.Any(e => e.PaymentId == id);
+            return _paymentRepository.CheckIfExistsById(id);
         }
     }
 }

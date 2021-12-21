@@ -3,12 +3,13 @@ using Holidayaro.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Holidayaro.Repositories
 {
-    public class PaymentRepositoryImp : IRepository<Payment>
+    public class PaymentRepositoryImp : IPaymentRepository
     {
         private ApplicationDbContext _context;
 
@@ -17,14 +18,14 @@ namespace Holidayaro.Repositories
             _context = context;
         }
 
-        public Payment Add(Payment payment)
+        public Payment AddNew(Payment payment)
         {
             _context.Payment.Add(payment);
             _context.SaveChanges();
             return payment;
         }
 
-        public Payment Delete(int id)
+        public Payment DeleteOneById(int id)
         {
             var payment = _context.Payment.Find(id);
             _context.Payment.Remove(payment);
@@ -32,7 +33,7 @@ namespace Holidayaro.Repositories
             return payment;
         }
 
-        public Payment Find(int id)
+        public Payment FindOneById(int id)
         {
             return _context.Payment.Find(id);
         }
@@ -42,16 +43,29 @@ namespace Holidayaro.Repositories
             return _context.Payment.ToList();
         }
 
-        public bool Exists(int id)
+        public bool CheckIfExistsById(int id)
         {
             return _context.Payment.Any(e => e.PaymentId == id);
         }
 
-        public Payment Update(Payment payment)
+        public Payment UpdateOne(Payment payment)
         {
             _context.Entry(payment).State = EntityState.Modified;
             _context.SaveChanges();
             return payment;
+        }
+
+        public dynamic GetManyByPageSizeAndOffset(int pageSize, int startIndex = -1)
+        {
+            var applicationDbContext = _context.Payment.Include(p => p.Reservation);
+            dynamic results = new ExpandoObject();
+            results.results = applicationDbContext.ToList().Skip(startIndex).Take(pageSize);
+            results.amount = applicationDbContext.ToList().Count();
+            if (startIndex == -1)
+            {
+                results.results = applicationDbContext.ToList();
+            }
+            return results;
         }
     }
 }

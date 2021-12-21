@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Holidayaro.Data;
 using Holidayaro.Models;
 using Microsoft.AspNetCore.Authorization;
+using Holidayaro.Repositories;
 
 namespace Holidayaro.Controllers
 {
@@ -15,98 +16,50 @@ namespace Holidayaro.Controllers
     [ApiController]
     public class HotelDescriptionsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IRepository<HotelDescription> _hotelDescriptionsRepository;
 
-        public HotelDescriptionsController(ApplicationDbContext context)
+        public HotelDescriptionsController(IRepository<HotelDescription> hotelDescriptionsRepository)
         {
-            _context = context;
+            _hotelDescriptionsRepository = hotelDescriptionsRepository;
         }
 
-        // GET: api/HotelDescriptions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HotelDescription>>> GetHotelDescription()
+        public IEnumerable<HotelDescription> GetHotelDescription()
         {
-            return await _context.HotelDescription.ToListAsync();
+            return _hotelDescriptionsRepository.FindAll();
         }
 
-        // GET: api/HotelDescriptions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<HotelDescription>> GetHotelDescription(int id)
+        public HotelDescription GetHotelDescription(int id)
         {
-            var hotelDescription = await _context.HotelDescription.FindAsync(id);
-
-            if (hotelDescription == null)
-            {
-                return NotFound();
-            }
-
-            return hotelDescription;
+            return _hotelDescriptionsRepository.FindOneById(id);
         }
 
-        // PUT: api/HotelDescriptions/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> PutHotelDescription(int id, HotelDescription hotelDescription)
+        public HotelDescription PutHotelDescription(int id, HotelDescription hotelDescription)
         {
-            if (id != hotelDescription.HotelDescriptionId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(hotelDescription).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelDescriptionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return _hotelDescriptionsRepository.UpdateOne(hotelDescription);
         }
 
-        // POST: api/HotelDescriptions
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<HotelDescription>> PostHotelDescription(HotelDescription hotelDescription)
+        public ActionResult<HotelDescription> PostHotelDescription(HotelDescription hotelDescription)
         {
-            _context.HotelDescription.Add(hotelDescription);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetHotelDescription", new { id = hotelDescription.HotelDescriptionId }, hotelDescription);
+            HotelDescription hd = _hotelDescriptionsRepository.AddNew(hotelDescription);
+            return CreatedAtAction("GetHotelDescription", new { id = hd.HotelDescriptionId }, hd);
         }
 
-        // DELETE: api/HotelDescriptions/5
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> DeleteHotelDescription(int id)
+        public HotelDescription DeleteHotelDescription(int id)
         {
-            var hotelDescription = await _context.HotelDescription.FindAsync(id);
-            if (hotelDescription == null)
-            {
-                return NotFound();
-            }
-
-            _context.HotelDescription.Remove(hotelDescription);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return _hotelDescriptionsRepository.DeleteOneById(id);
         }
 
         private bool HotelDescriptionExists(int id)
         {
-            return _context.HotelDescription.Any(e => e.HotelDescriptionId == id);
+            return _hotelDescriptionsRepository.CheckIfExistsById(id);
         }
     }
 }

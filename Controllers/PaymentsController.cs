@@ -15,58 +15,47 @@ namespace Holidayaro.Controllers
     [ApiController]
     public class PaymentsController : ControllerBase
     { 
-        private readonly IRepository<Payment> _paymentRepository;
+        private readonly IPaymentRepository _paymentRepository;
 
-        public PaymentsController(IRepository<Payment> paymentRepository)
+        public PaymentsController(IPaymentRepository paymentRepository)
         {
             _paymentRepository = paymentRepository;
         }
 
-        // GET: api/Payments
         [HttpGet]
         public IList<Payment> GetPayment()
         {
             return _paymentRepository.FindAll();
         }
 
-        // GET: api/Payments/5
         [HttpGet("{id}")]
         public Payment GetPayment(int id)
         {
-            return _paymentRepository.Find(id);
+            return _paymentRepository.FindOneById(id);
         }
 
-        // PUT: api/Payments/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult PutPayment(int id, Payment payment)
+        public Payment PutPayment(int id, Payment payment)
         {
-            _paymentRepository.Update(payment);
-
-            return NoContent();
+            return _paymentRepository.UpdateOne(payment);
         }
 
-        // POST: api/Payments
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public ActionResult<Payment> PostPayment(Payment payment)
         {
-            Payment p = _paymentRepository.Add(payment);
-
+            Payment p = _paymentRepository.AddNew(payment);
             return CreatedAtAction("GetPayment", new { id = p.PaymentId }, p);
         }
 
-        // DELETE: api/Payments/5
         [HttpDelete("{id}")]
-        public IActionResult DeletePayment(int id)
+        public Payment DeletePayment(int id)
         {
-            _paymentRepository.Delete(id);
-            return NoContent();
+            return _paymentRepository.DeleteOneById(id);
         }
 
         private bool PaymentExists(int id)
         {
-            return _paymentRepository.Exists(id);
+            return _paymentRepository.CheckIfExistsById(id);
         }
     }
 }

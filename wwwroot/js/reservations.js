@@ -74,8 +74,8 @@ const initCreatePayment = () => {
             PaypalEmail: paypalEmailInput.value,
             CreditCardNumber: creditCardNumberInput.value,
             CreditCardHolderName: creditCardHolderNameInput.value,
-            CreditCardExpirationMonth: monthSelect.value,
-            CreditCardExpirationYear: yearSelect.value,
+            CreditCardExpirationMonth: paymentMethod === 'card' ? monthSelect.value : '',
+            CreditCardExpirationYear: paymentMethod === 'card' ? yearSelect.value : '',
             CreditCardCvv: cvvInput.value,
             ReservationId: reservationToPayId,
             PaymentAmount: hotelPrice

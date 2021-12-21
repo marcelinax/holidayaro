@@ -8,11 +8,11 @@ namespace Holidayaro.Repositories
 {
     public interface IRepository<T>
     {
-        T Find(int id);
-        T Delete(int id);
-        T Add(T payment);
-        T Update(T payment);
+        T FindOneById(int id);
+        T DeleteOneById(int id);
+        T AddNew(T item);
+        T UpdateOne(T item);
         IList<T> FindAll();
-        Boolean Exists(int id);
+        Boolean CheckIfExistsById(int id);
     }
 }

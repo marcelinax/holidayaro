@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Holidayaro.Data;
 using Holidayaro.Models;
+using Holidayaro.Repositories;
 
 namespace Holidayaro.Controllers
 {
@@ -14,95 +15,47 @@ namespace Holidayaro.Controllers
     [ApiController]
     public class HotelsApiController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IRepository<Hotel> _hotelsApiRepository;
 
-        public HotelsApiController(ApplicationDbContext context)
+        public HotelsApiController(IRepository<Hotel> hotelsApiRepository)
         {
-            _context = context;
+            _hotelsApiRepository = hotelsApiRepository;
         }
 
-        // GET: api/HotelsApi
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotel()
+        public IEnumerable<Hotel> GetHotel()
         {
-            return await _context.Hotel.Include("HotelAttractions").Include("HotelDescriptions").Include("PhotosUrls").ToListAsync();
+            return _hotelsApiRepository.FindAll();
         }
 
-        // GET: api/HotelsApi/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public Hotel GetHotel(int id)
         {
-            var hotel = await _context.Hotel.FindAsync(id);
-
-            if (hotel == null)
-            {
-                return NotFound();
-            }
-
-            return hotel;
+            return _hotelsApiRepository.FindOneById(id);
         }
 
-        // PUT: api/HotelsApi/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotel(int id, Hotel hotel)
+        public Hotel PutHotel(int id, Hotel hotel)
         {
-            if (id != hotel.HotelId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(hotel).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return _hotelsApiRepository.UpdateOne(hotel);
         }
 
-        // POST: api/HotelsApi
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+        public ActionResult<Hotel> PostHotel(Hotel hotel)
         {
-            _context.Hotel.Add(hotel);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetHotel", new { id = hotel.HotelId }, hotel);
+            Hotel h = _hotelsApiRepository.AddNew(hotel);
+            return CreatedAtAction("GetHotel", new { id = h.HotelId }, h);
         }
 
-        // DELETE: api/HotelsApi/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHotel(int id)
+        public Hotel DeleteHotel(int id)
         {
-            var hotel = await _context.Hotel.FindAsync(id);
-            if (hotel == null)
-            {
-                return NotFound();
-            }
-
-            _context.Hotel.Remove(hotel);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return _hotelsApiRepository.DeleteOneById(id);
         }
 
         private bool HotelExists(int id)
         {
-            return _context.Hotel.Any(e => e.HotelId == id);
+            return _hotelsApiRepository.CheckIfExistsById(id);
         }
     }
 }

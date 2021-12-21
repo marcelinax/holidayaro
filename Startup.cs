@@ -40,8 +40,13 @@ namespace Holidayaro
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
-            services.AddScoped<IRepository<Payment>, PaymentRepositoryImp>();
-            services.AddScoped<IRepository<Reservation>, ReservationRepositoryImp>();
+            services.AddScoped<IPaymentRepository, PaymentRepositoryImp>();
+            services.AddScoped<IReservationsRepository, ReservationRepositoryImp>();
+            services.AddScoped<IHotelsRepository, HotelsRepositoryImp>();
+            services.AddScoped<IRepository<PhotosUrl>, PhotosUrlsRepositoryImp>();
+            services.AddScoped<IRepository<HotelAttraction>, HotelAttractionsRepositoryImp>();
+            services.AddScoped<IRepository<HotelDescription>, HotelDescriptionsRepositoryImp>();
+            services.AddScoped<IRepository<Hotel>, HotelsApiRepositoryImp>();
 
             services.AddControllers().AddJsonOptions(x =>
             {
