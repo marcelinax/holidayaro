@@ -79,7 +79,6 @@ const initCreatePayment = () => {
             CreditCardCvv: cvvInput.value,
             ReservationId: reservationToPayId,
             PaymentAmount: hotelPrice
-            
         }
 
         if (paymentValidation()) {

@@ -40,7 +40,7 @@ namespace Holidayaro.Repositories
 
         public Reservation FindOneById(int id)
         {
-            return _context.Reservation.Include(r => r.Hotel).FirstOrDefault(m => m.ReservationId == id);
+            return _context.Reservation.FirstOrDefault(m => m.ReservationId == id);
         }
 
         public IList<Reservation> FindAll()
